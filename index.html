@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Japan Trip 2026 - Collaborative Dashboard</title>
+    <title>Japan Trip 2026 - Dashboard</title>
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -15,6 +15,7 @@
             background: #0f172a;
             min-height: 100vh;
             padding: 20px;
+            color: #f1f5f9;
         }
         .container { max-width: 1400px; margin: 0 auto; }
         header {
@@ -46,41 +47,7 @@
             animation: pulse 2s infinite;
         }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
-        .config-notice {
-            background: #fef3c7;
-            color: #92400e;
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            border-left: 4px solid #f59e0b;
-        }
-        .config-notice h3 { margin-bottom: 10px; }
-        .config-form {
-            margin-top: 15px;
-            padding: 15px;
-            background: white;
-            border-radius: 8px;
-        }
-        .config-form input {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-size: 0.95em;
-        }
-        .config-form button {
-            width: 100%;
-            padding: 12px;
-            background: #667eea;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 1em;
-            cursor: pointer;
-            font-weight: 600;
-        }
-        .config-form button:hover { background: #5568d3; }
+        
         .dashboard-grid {
             display: grid;
             grid-template-columns: 1fr 400px;
@@ -107,7 +74,7 @@
             border-radius: 12px;
             padding: 20px;
             margin-bottom: 15px;
-            border-left: 4px solid #667eea;
+            border-left: 4px solid #818cf8;
             transition: transform 0.2s;
             border: 1px solid #334155;
         }
@@ -122,7 +89,7 @@
         .location { color: #94a3b8; font-size: 0.95em; margin-bottom: 5px; }
         .date { color: #64748b; font-size: 0.9em; }
         .cost-badge {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #818cf8 0%, #6366f1 100%);
             color: white;
             padding: 8px 15px;
             border-radius: 20px;
@@ -149,54 +116,54 @@
             align-items: center;
             margin-bottom: 10px;
         }
-        .activities-header h4 {
-            color: #f1f5f9;
-            font-size: 1em;
-        }
+        .activities-header h4 { color: #f1f5f9; }
         .add-btn {
-            background: #667eea;
+            background: #818cf8;
             color: white;
             border: none;
-            padding: 6px 12px;
+            padding: 8px 14px;
             border-radius: 6px;
             cursor: pointer;
-            font-size: 0.85em;
-        }
-        .add-btn:hover { background: #5568d3; }
-        .activity-item {
-            background: #0f172a;
-            border: 1px solid #334155;
-            border-radius: 8px;
-            padding: 12px;
-            margin-bottom: 8px;
-            display: flex;
-            justify-content: space-between;
-            animation: slideIn 0.3s ease;
-        }
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .activity-content { flex: 1; }
-        .activity-name { color: #f1f5f9; font-weight: 500; margin-bottom: 4px; }
-        .activity-time { color: #94a3b8; font-size: 0.85em; }
-        .activity-cost {
-            color: #10b981;
-            font-weight: 600;
             font-size: 0.9em;
-            margin-top: 4px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
-        .delete-btn {
-            background: #ff4757;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.8em;
+        .add-btn:hover { 
+            background: #6366f1; 
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(129, 140, 248, 0.6),
+                        0 0 40px rgba(129, 140, 248, 0.4),
+                        0 0 60px rgba(129, 140, 248, 0.2);
+            animation: shine 1.5s ease-in-out infinite;
         }
-        .delete-btn:hover { background: #ee5a6f; }
-        .expense-item {
+        .add-btn:active {
+            animation: flashRed 0.3s ease;
+            transform: scale(0.98);
+        }
+        @keyframes shine {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(129, 140, 248, 0.6),
+                            0 0 40px rgba(129, 140, 248, 0.4),
+                            0 0 60px rgba(129, 140, 248, 0.2);
+            }
+            50% {
+                box-shadow: 0 0 30px rgba(129, 140, 248, 0.8),
+                            0 0 60px rgba(129, 140, 248, 0.6),
+                            0 0 90px rgba(129, 140, 248, 0.4);
+            }
+        }
+        @keyframes flashRed {
+            0%, 100% {
+                background: #6366f1;
+            }
+            50% {
+                background: #ef4444;
+                box-shadow: 0 0 30px rgba(239, 68, 68, 0.8);
+            }
+        }
+        .activity-item, .expense-item {
             background: #0f172a;
             border: 1px solid #334155;
             border-radius: 8px;
@@ -205,14 +172,39 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            animation: slideIn 0.3s ease;
         }
-        .expense-content { flex: 1; }
-        .expense-name { color: #f1f5f9; font-weight: 500; }
-        .expense-date { color: #94a3b8; font-size: 0.85em; }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .activity-content, .expense-content { flex: 1; }
+        .activity-name, .expense-name { color: #f1f5f9; font-weight: 500; margin-bottom: 4px; }
+        .activity-time, .expense-date { color: #94a3b8; font-size: 0.85em; }
+        .activity-cost {
+            color: #10b981;
+            font-weight: 600;
+            font-size: 0.9em;
+            margin-top: 4px;
+        }
         .expense-amount {
             color: #ef4444;
             font-weight: 700;
             font-size: 1.1em;
+        }
+        .delete-btn {
+            background: #7f1d1d;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8em;
+            transition: all 0.2s;
+        }
+        .delete-btn:hover { 
+            background: #991b1b;
+            transform: scale(1.05);
         }
         .modal {
             display: none;
@@ -221,7 +213,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.7);
+            background: rgba(0,0,0,0.8);
             z-index: 1000;
             align-items: center;
             justify-content: center;
@@ -234,6 +226,8 @@
             max-width: 500px;
             width: 90%;
             border: 1px solid #334155;
+            max-height: 90vh;
+            overflow-y: auto;
         }
         .modal-header { margin-bottom: 20px; }
         .modal-header h3 { color: #f1f5f9; font-size: 1.5em; }
@@ -256,7 +250,7 @@
         }
         .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: #818cf8;
         }
         .form-group textarea { resize: vertical; min-height: 80px; }
         .btn {
@@ -265,11 +259,13 @@
             border-radius: 8px;
             cursor: pointer;
             font-size: 1em;
+            transition: all 0.2s;
         }
-        .btn-primary { background: #667eea; color: white; }
-        .btn-primary:hover { background: #5568d3; }
-        .btn-secondary { background: #e0e0e0; color: #333; }
-        .btn-secondary:hover { background: #d0d0d0; }
+        .btn-primary { background: #818cf8; color: white; }
+        .btn-primary:hover { background: #6366f1; }
+        .btn-secondary { background: #334155; color: #f1f5f9; }
+        .btn-secondary:hover { background: #475569; }
+        
         .budget-tabs {
             display: flex;
             gap: 10px;
@@ -291,9 +287,8 @@
             color: #818cf8;
             border-bottom-color: #818cf8;
         }
-        .budget-tab:hover {
-            color: #818cf8;
-        }
+        .budget-tab:hover { color: #818cf8; }
+        
         .budget-item {
             display: flex;
             justify-content: space-between;
@@ -303,61 +298,40 @@
             background: #0f172a;
             border-radius: 6px;
             margin-bottom: 8px;
-        }
-        .budget-item.editable {
-            cursor: pointer;
             transition: all 0.2s;
         }
-        .budget-item.editable:hover {
+        .budget-item:hover {
             background: #1e293b;
-            border-color: #667eea;
-        }
-        .budget-item.total {
-            font-weight: bold;
-            color: #818cf8;
-            padding-top: 15px;
-            margin-top: 10px;
-            border-top: 2px solid #667eea;
-            background: #1e293b;
+            border-color: #818cf8;
         }
         .budget-item-content {
             flex: 1;
-            color: #cbd5e1;
+            color: #f1f5f9;
         }
         .budget-item-actions {
             display: flex;
             gap: 8px;
-            opacity: 0;
-            transition: opacity 0.2s;
         }
-        .budget-item:hover .budget-item-actions {
-            opacity: 1;
-        }
-        .edit-btn, .delete-budget-btn {
+        .edit-btn {
             background: #334155;
             color: #cbd5e1;
             border: none;
-            padding: 4px 8px;
+            padding: 6px 12px;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 0.75em;
+            font-size: 0.8em;
         }
         .edit-btn:hover {
             background: #475569;
         }
-        .delete-budget-btn {
-            background: #7f1d1d;
-        }
-        .delete-budget-btn:hover {
-            background: #991b1b;
-        }
         .budget-comparison {
             display: flex;
-            gap: 5px;
+            gap: 8px;
             align-items: center;
+            color: #f1f5f9;
         }
         .budget-projected {
-            color: #999;
+            color: #64748b;
             font-size: 0.9em;
             text-decoration: line-through;
         }
@@ -368,29 +342,30 @@
         .budget-savings {
             color: #10b981;
             font-size: 0.85em;
-            background: #f0fdf4;
+            background: #022c22;
             padding: 2px 8px;
             border-radius: 10px;
         }
         .budget-overspend {
             color: #ef4444;
             font-size: 0.85em;
-            background: #fef2f2;
+            background: #450a0a;
             padding: 2px 8px;
             border-radius: 10px;
         }
         .budget-progress {
             margin-top: 20px;
             padding-top: 20px;
-            border-top: 2px solid #eee;
+            border-top: 2px solid #334155;
         }
         .budget-progress-bar {
             width: 100%;
             height: 30px;
-            background: #f0f0f0;
+            background: #0f172a;
             border-radius: 15px;
             overflow: hidden;
             margin: 8px 0;
+            border: 1px solid #334155;
         }
         .budget-progress-fill {
             height: 100%;
@@ -412,40 +387,47 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
-            margin-top: 20px;
+            margin-bottom: 20px;
         }
         .budget-summary-item {
-            background: #f8f9fa;
+            background: #1e293b;
             padding: 15px;
             border-radius: 8px;
             text-align: center;
+            border: 1px solid #334155;
         }
         .budget-summary-label {
             font-size: 0.85em;
-            color: #666;
+            color: #94a3b8;
             margin-bottom: 5px;
         }
         .budget-summary-value {
             font-size: 1.5em;
             font-weight: bold;
+            color: #f1f5f9;
         }
-        .budget-summary-value.positive {
-            color: #10b981;
-        }
-        .budget-summary-value.negative {
-            color: #ef4444;
-        }
+        .budget-summary-value.positive { color: #10b981; }
+        .budget-summary-value.negative { color: #ef4444; }
+        
         .loading {
             text-align: center;
             padding: 60px 20px;
-            color: white;
+            color: #cbd5e1;
             font-size: 1.2em;
         }
         .no-activities {
-            color: #999;
+            color: #64748b;
             font-style: italic;
             text-align: center;
             padding: 10px;
+        }
+        .error-message {
+            background: #7f1d1d;
+            color: #fecaca;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #991b1b;
         }
         @media (max-width: 968px) {
             .dashboard-grid { grid-template-columns: 1fr; }
@@ -459,20 +441,6 @@
 
     <script type="text/babel">
         const { useState, useEffect } = React;
-
-        const defaultBudget = [
-            {category:"Round-trip Flights (2 people)",projected:2000},
-            {category:"Hotels (14 nights)",projected:1200},
-            {category:"Shinkansen",projected:260},
-            {category:"Local Transport",projected:150},
-            {category:"Tokyo Disneyland",projected:75},
-            {category:"Universal Studios Japan",projected:75},
-            {category:"Food ($40/day x 14)",projected:560},
-            {category:"Temple/Shrine fees",projected:50},
-            {category:"SIM card",projected:30},
-            {category:"Souvenirs",projected:150},
-            {category:"Emergency Buffer",projected:150}
-        ];
 
         const itineraryDays = [
             {date:"2026-07-19",day:"Day 1",location:"Tokyo (Shinjuku / Shibuya)",highlights:"Arrive in Tokyo; explore Shibuya Crossing, Hachikō, izakaya dinner",cost:100},
@@ -493,71 +461,80 @@
 
         function App() {
             const [supabase, setSupabase] = useState(null);
-            const [configured, setConfigured] = useState(false);
             const [activities, setActivities] = useState({});
             const [expenses, setExpenses] = useState([]);
+            const [budgetCategories, setBudgetCategories] = useState([]);
+            const [itinerary, setItinerary] = useState(itineraryDays);
             const [budgetTab, setBudgetTab] = useState('overview');
             const [modalOpen, setModalOpen] = useState(false);
             const [expenseModalOpen, setExpenseModalOpen] = useState(false);
+            const [budgetModalOpen, setBudgetModalOpen] = useState(false);
+            const [dayModalOpen, setDayModalOpen] = useState(false);
             const [currentDay, setCurrentDay] = useState(null);
+            const [editingBudget, setEditingBudget] = useState(null);
+            const [editingDay, setEditingDay] = useState(null);
             const [loading, setLoading] = useState(true);
+            const [error, setError] = useState(null);
 
             useEffect(() => {
-                // Auto-configure with hardcoded credentials
                 const SUPABASE_URL = 'https://rcxciqtrppqovnkibyka.supabase.co';
                 const SUPABASE_ANON_KEY = 'sb_publishable_JcgNw86HC5RRO3BCWYraxw_s2S4wiNe';
                 
                 const savedUrl = localStorage.getItem('supabase_url') || SUPABASE_URL;
                 const savedKey = localStorage.getItem('supabase_key') || SUPABASE_ANON_KEY;
                 
-                // Auto-save for future visits
                 localStorage.setItem('supabase_url', savedUrl);
                 localStorage.setItem('supabase_key', savedKey);
+                
+                // Load saved itinerary
+                const savedItinerary = localStorage.getItem('itinerary');
+                if (savedItinerary) {
+                    try {
+                        setItinerary(JSON.parse(savedItinerary));
+                    } catch (e) {
+                        console.error('Failed to parse saved itinerary');
+                    }
+                }
                 
                 initSupabase(savedUrl, savedKey);
             }, []);
 
             const initSupabase = (url, key) => {
-                const client = window.supabase.createClient(url, key);
-                setSupabase(client);
-                setConfigured(true);
-                loadData(client);
-                subscribeToChanges(client);
-            };
-
-            const handleConfig = (e) => {
-                e.preventDefault();
-                const url = e.target.supabase_url.value.trim();
-                const key = e.target.supabase_key.value.trim();
-                
-                if (!url || !key) {
-                    alert('Please fill in both fields');
-                    return;
+                try {
+                    const client = window.supabase.createClient(url, key);
+                    setSupabase(client);
+                    loadData(client);
+                    subscribeToChanges(client);
+                } catch (err) {
+                    setError('Failed to connect to database: ' + err.message);
+                    setLoading(false);
                 }
-
-                localStorage.setItem('supabase_url', url);
-                localStorage.setItem('supabase_key', key);
-                initSupabase(url, key);
             };
 
             const loadData = async (client) => {
                 setLoading(true);
+                setError(null);
                 
-                // Load activities
-                const { data: activitiesData } = await client.from('activities').select('*');
-                if (activitiesData) {
-                    const grouped = {};
-                    activitiesData.forEach(act => {
-                        if (!grouped[act.day_index]) grouped[act.day_index] = [];
-                        grouped[act.day_index].push(act);
-                    });
-                    setActivities(grouped);
-                }
+                try {
+                    const [activitiesRes, expensesRes, budgetRes] = await Promise.all([
+                        client.from('activities').select('*'),
+                        client.from('expenses').select('*').order('date', { ascending: false }),
+                        client.from('budget_categories').select('*').order('sort_order')
+                    ]);
 
-                // Load expenses
-                const { data: expensesData } = await client.from('expenses').select('*').order('date', { ascending: false });
-                if (expensesData) {
-                    setExpenses(expensesData);
+                    if (activitiesRes.data) {
+                        const grouped = {};
+                        activitiesRes.data.forEach(act => {
+                            if (!grouped[act.day_index]) grouped[act.day_index] = [];
+                            grouped[act.day_index].push(act);
+                        });
+                        setActivities(grouped);
+                    }
+
+                    if (expensesRes.data) setExpenses(expensesRes.data);
+                    if (budgetRes.data) setBudgetCategories(budgetRes.data);
+                } catch (err) {
+                    setError('Failed to load data: ' + err.message);
                 }
                 
                 setLoading(false);
@@ -567,31 +544,104 @@
                 client.channel('realtime')
                     .on('postgres_changes', { event: '*', schema: 'public', table: 'activities' }, () => loadData(client))
                     .on('postgres_changes', { event: '*', schema: 'public', table: 'expenses' }, () => loadData(client))
+                    .on('postgres_changes', { event: '*', schema: 'public', table: 'budget_categories' }, () => loadData(client))
                     .subscribe();
             };
 
             const addActivity = async (dayIndex, activity) => {
                 if (!supabase) return;
-                await supabase.from('activities').insert([{ day_index: dayIndex, ...activity }]);
+                try {
+                    const { error } = await supabase.from('activities').insert([{ day_index: dayIndex, ...activity }]);
+                    if (error) throw error;
+                } catch (err) {
+                    alert('Failed to add activity: ' + err.message);
+                }
             };
 
             const deleteActivity = async (id) => {
                 if (!supabase || !confirm('Delete this activity?')) return;
-                await supabase.from('activities').delete().eq('id', id);
+                try {
+                    const { error } = await supabase.from('activities').delete().eq('id', id);
+                    if (error) throw error;
+                } catch (err) {
+                    alert('Failed to delete activity: ' + err.message);
+                }
             };
 
             const addExpense = async (expense) => {
                 if (!supabase) return;
-                await supabase.from('expenses').insert([expense]);
+                try {
+                    const { error } = await supabase.from('expenses').insert([expense]);
+                    if (error) throw error;
+                } catch (err) {
+                    alert('Failed to add expense: ' + err.message);
+                }
             };
 
             const deleteExpense = async (id) => {
                 if (!supabase || !confirm('Delete this expense?')) return;
-                await supabase.from('expenses').delete().eq('id', id);
+                try {
+                    const { error } = await supabase.from('expenses').delete().eq('id', id);
+                    if (error) throw error;
+                } catch (err) {
+                    alert('Failed to delete expense: ' + err.message);
+                }
+            };
+
+            const addBudgetCategory = async (category) => {
+                if (!supabase) return;
+                try {
+                    const maxSort = budgetCategories.length > 0 ? Math.max(...budgetCategories.map(b => b.sort_order || 0), 0) : 0;
+                    const { error } = await supabase.from('budget_categories').insert([{ ...category, sort_order: maxSort + 1 }]);
+                    if (error) throw error;
+                } catch (err) {
+                    alert('Failed to add budget category: ' + err.message);
+                    console.error('Budget error:', err);
+                }
+            };
+
+            const updateBudgetCategory = async (id, updates) => {
+                if (!supabase) return;
+                try {
+                    const { error } = await supabase.from('budget_categories').update(updates).eq('id', id);
+                    if (error) throw error;
+                } catch (err) {
+                    alert('Failed to update budget: ' + err.message);
+                }
+            };
+
+            const deleteBudgetCategory = async (id) => {
+                if (!supabase || !confirm('Delete this budget category?')) return;
+                try {
+                    const { error } = await supabase.from('budget_categories').delete().eq('id', id);
+                    if (error) throw error;
+                } catch (err) {
+                    alert('Failed to delete budget category: ' + err.message);
+                }
+            };
+
+            const updateDay = (index, updates) => {
+                const newItinerary = [...itinerary];
+                newItinerary[index] = { ...newItinerary[index], ...updates };
+                setItinerary(newItinerary);
+                localStorage.setItem('itinerary', JSON.stringify(newItinerary));
+            };
+
+            const deleteDay = (index) => {
+                if (!confirm('Delete this entire day from the itinerary?')) return;
+                const newItinerary = itinerary.filter((_, i) => i !== index);
+                setItinerary(newItinerary);
+                localStorage.setItem('itinerary', JSON.stringify(newItinerary));
+            };
+
+            const addDay = (day) => {
+                const newItinerary = [...itinerary, day];
+                setItinerary(newItinerary);
+                localStorage.setItem('itinerary', JSON.stringify(newItinerary));
             };
 
             const calculateBudget = () => {
-                const projectedTotal = defaultBudget.reduce((sum, item) => sum + item.projected, 0);
+                const projectedTotal = budgetCategories.reduce((sum, item) => sum + parseFloat(item.projected), 0);
                 const actualTotal = expenses.reduce((sum, exp) => sum + exp.amount, 0);
                 const difference = projectedTotal - actualTotal;
                 const percentUsed = (actualTotal / 5000) * 100;
@@ -599,7 +649,7 @@
                 return { projectedTotal, actualTotal, difference, percentUsed };
             };
 
-            if (loading) return <div className="loading">Loading...</div>;
+            if (loading) return <div className="loading">Loading your trip dashboard...</div>;
 
             const budget = calculateBudget();
 
@@ -610,15 +660,20 @@
                         <p className="trip-dates">July 19 - August 2, 2026 | 14 Days</p>
                         <span className="sync-badge">
                             <span className="sync-dot"></span>
-                            Live Collaboration Active
+                            Live Sync Active
                         </span>
                     </header>
+
+                    {error && <div className="error-message">⚠️ {error}</div>}
 
                     <div className="dashboard-grid">
                         <div>
                             <div className="card">
-                                <h2>📅 Daily Itinerary</h2>
-                                {itineraryDays.map((day, index) => (
+                                <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:'20px'}}>
+                                    <h2>📅 Daily Itinerary</h2>
+                                    <button className="add-btn" onClick={() => { setEditingDay(null); setDayModalOpen(true); }}>+ Add Day</button>
+                                </div>
+                                {itinerary.map((day, index) => (
                                     <div key={index} className="day-card">
                                         <div className="day-header">
                                             <div className="day-info">
@@ -626,13 +681,19 @@
                                                 <div className="location">📍 {day.location}</div>
                                                 <div className="date">{new Date(day.date).toLocaleDateString('en-US', {weekday:'long',month:'long',day:'numeric',year:'numeric'})}</div>
                                             </div>
-                                            <div className="cost-badge">${day.cost}</div>
+                                            <div style={{display:'flex',flexDirection:'column',gap:'8px',alignItems:'flex-end'}}>
+                                                <div className="cost-badge">${day.cost}</div>
+                                                <div style={{display:'flex',gap:'5px'}}>
+                                                    <button className="edit-btn" onClick={() => { setEditingDay({...day, index}); setDayModalOpen(true); }}>Edit</button>
+                                                    <button className="delete-btn" onClick={() => deleteDay(index)}>Delete</button>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div className="highlights">{day.highlights}</div>
                                         <div className="activities-section">
                                             <div className="activities-header">
                                                 <h4>🎯 Activities</h4>
-                                                <button className="add-btn" onClick={() => { setCurrentDay(index); setModalOpen(true); }}>+ Add</button>
+                                                <button className="add-btn" onClick={() => { setCurrentDay(index); setModalOpen(true); }}>+ Add Activity</button>
                                             </div>
                                             {activities[index] && activities[index].length > 0 ? (
                                                 activities[index].map(act => (
@@ -649,7 +710,7 @@
                                                     </div>
                                                 ))
                                             ) : (
-                                                <div className="no-activities">No activities yet</div>
+                                                <div className="no-activities">No activities added yet</div>
                                             )}
                                         </div>
                                     </div>
@@ -675,20 +736,20 @@
                                         <div className="budget-summary">
                                             <div className="budget-summary-item">
                                                 <div className="budget-summary-label">Projected</div>
-                                                <div className="budget-summary-value">${budget.projectedTotal}</div>
+                                                <div className="budget-summary-value">${budget.projectedTotal.toFixed(0)}</div>
                                             </div>
                                             <div className="budget-summary-item">
                                                 <div className="budget-summary-label">Actual Spent</div>
                                                 <div className={`budget-summary-value ${budget.actualTotal <= budget.projectedTotal ? 'positive' : 'negative'}`}>
-                                                    ${budget.actualTotal}
+                                                    ${budget.actualTotal.toFixed(0)}
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div className="budget-progress">
-                                            <div style={{display:'flex',justifyContent:'space-between',marginBottom:'8px',fontSize:'0.9em'}}>
+                                            <div style={{display:'flex',justifyContent:'space-between',marginBottom:'8px',fontSize:'0.9em',color:'#f1f5f9'}}>
                                                 <strong>Budget Used:</strong>
-                                                <strong>${budget.actualTotal} / $5,000</strong>
+                                                <strong>${budget.actualTotal.toFixed(0)} / $5,000</strong>
                                             </div>
                                             <div className="budget-progress-bar">
                                                 <div className={`budget-progress-fill ${budget.percentUsed > 90 ? 'danger' : budget.percentUsed > 75 ? 'warning' : ''}`} 
@@ -698,30 +759,42 @@
                                             </div>
                                             <div style={{textAlign:'center',marginTop:'10px',fontWeight:'bold',fontSize:'0.95em',color: budget.difference >= 0 ? '#10b981' : '#ef4444'}}>
                                                 {budget.difference >= 0 ? '✅ Under Budget: ' : '⚠️ Over Budget: '}
-                                                ${Math.abs(budget.difference)}
+                                                ${Math.abs(budget.difference).toFixed(0)}
                                             </div>
                                         </div>
 
-                                        {defaultBudget.map((item, i) => {
+                                        <div style={{marginTop:'20px'}}>
+                                            <button className="add-btn" style={{width:'100%',marginBottom:'15px'}} onClick={() => { setEditingBudget(null); setBudgetModalOpen(true); }}>
+                                                + Add Budget Category
+                                            </button>
+                                        </div>
+
+                                        {budgetCategories.map((item) => {
                                             const categoryExpenses = expenses.filter(e => e.category === item.category);
                                             const actualCost = categoryExpenses.reduce((sum, e) => sum + e.amount, 0);
                                             const hasSavings = actualCost > 0 && actualCost < item.projected;
                                             const hasOverspend = actualCost > item.projected;
 
                                             return (
-                                                <div key={i} className="budget-item">
-                                                    <span>{item.category}</span>
+                                                <div key={item.id} className="budget-item">
+                                                    <div className="budget-item-content">
+                                                        <span>{item.category}</span>
+                                                    </div>
                                                     <div className="budget-comparison">
                                                         {actualCost > 0 ? (
                                                             <>
                                                                 <span className="budget-projected">${item.projected}</span>
-                                                                <span className="budget-actual">${actualCost}</span>
-                                                                {hasSavings && <span className="budget-savings">-${item.projected - actualCost}</span>}
-                                                                {hasOverspend && <span className="budget-overspend">+${actualCost - item.projected}</span>}
+                                                                <span className="budget-actual">${actualCost.toFixed(0)}</span>
+                                                                {hasSavings && <span className="budget-savings">-${(item.projected - actualCost).toFixed(0)}</span>}
+                                                                {hasOverspend && <span className="budget-overspend">+${(actualCost - item.projected).toFixed(0)}</span>}
                                                             </>
                                                         ) : (
-                                                            <span>${item.projected}</span>
+                                                            <span style={{color:'#f1f5f9'}}>${item.projected}</span>
                                                         )}
+                                                    </div>
+                                                    <div className="budget-item-actions">
+                                                        <button className="edit-btn" onClick={() => { setEditingBudget(item); setBudgetModalOpen(true); }}>Edit</button>
+                                                        <button className="delete-btn" onClick={() => deleteBudgetCategory(item.id)}>Delete</button>
                                                     </div>
                                                 </div>
                                             );
@@ -744,7 +817,7 @@
                                                         </div>
                                                     </div>
                                                     <div style={{display:'flex',alignItems:'center',gap:'10px'}}>
-                                                        <span className="expense-amount">${exp.amount}</span>
+                                                        <span className="expense-amount">${exp.amount.toFixed(2)}</span>
                                                         <button className="delete-btn" onClick={() => deleteExpense(exp.id)}>×</button>
                                                     </div>
                                                 </div>
@@ -759,7 +832,9 @@
                     </div>
 
                     {modalOpen && <ActivityModal onClose={() => setModalOpen(false)} onAdd={(act) => { addActivity(currentDay, act); setModalOpen(false); }} />}
-                    {expenseModalOpen && <ExpenseModal onClose={() => setExpenseModalOpen(false)} onAdd={(exp) => { addExpense(exp); setExpenseModalOpen(false); }} />}
+                    {expenseModalOpen && <ExpenseModal categories={budgetCategories} onClose={() => setExpenseModalOpen(false)} onAdd={(exp) => { addExpense(exp); setExpenseModalOpen(false); }} />}
+                    {budgetModalOpen && <BudgetModal budget={editingBudget} onClose={() => setBudgetModalOpen(false)} onSave={(cat) => { editingBudget ? updateBudgetCategory(editingBudget.id, cat) : addBudgetCategory(cat); setBudgetModalOpen(false); }} />}
+                    {dayModalOpen && <DayModal day={editingDay} onClose={() => setDayModalOpen(false)} onSave={(d) => { editingDay ? updateDay(editingDay.index, d) : addDay(d); setDayModalOpen(false); }} />}
                 </div>
             );
         }
@@ -773,27 +848,29 @@
             return (
                 <div className="modal active" onClick={onClose}>
                     <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                        <h3>Add Activity</h3>
-                        <form onSubmit={(e) => { e.preventDefault(); onAdd({ name, time, notes, cost: cost ? parseFloat(cost) : null }); }}>
+                        <div className="modal-header">
+                            <h3>Add Activity</h3>
+                        </div>
+                        <form onSubmit={(e) => { e.preventDefault(); if(name) onAdd({ name, time: time || null, notes: notes || null, cost: cost ? parseFloat(cost) : null }); }}>
                             <div className="form-group">
                                 <label>Activity Name *</label>
-                                <input type="text" value={name} onChange={(e) => setName(e.target.value)} required />
+                                <input type="text" value={name} onChange={(e) => setName(e.target.value)} required placeholder="e.g., Visit Sensoji Temple" />
                             </div>
                             <div className="form-group">
                                 <label>Time</label>
                                 <input type="time" value={time} onChange={(e) => setTime(e.target.value)} />
                             </div>
                             <div className="form-group">
-                                <label>Cost (optional)</label>
+                                <label>Cost ($)</label>
                                 <input type="number" step="0.01" value={cost} onChange={(e) => setCost(e.target.value)} placeholder="0.00" />
                             </div>
                             <div className="form-group">
                                 <label>Notes</label>
-                                <textarea value={notes} onChange={(e) => setNotes(e.target.value)} />
+                                <textarea value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="Any special notes..."></textarea>
                             </div>
                             <div style={{display:'flex',gap:'10px',justifyContent:'flex-end'}}>
                                 <button type="button" className="btn btn-secondary" onClick={onClose}>Cancel</button>
-                                <button type="submit" className="btn btn-primary">Add</button>
+                                <button type="submit" className="btn btn-primary">Add Activity</button>
                             </div>
                         </form>
                     </div>
@@ -801,17 +878,19 @@
             );
         }
 
-        function ExpenseModal({ onClose, onAdd }) {
+        function ExpenseModal({ categories, onClose, onAdd }) {
             const [description, setDescription] = useState('');
             const [amount, setAmount] = useState('');
-            const [category, setCategory] = useState(defaultBudget[0].category);
+            const [category, setCategory] = useState(categories[0]?.category || '');
             const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
 
             return (
                 <div className="modal active" onClick={onClose}>
                     <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                        <h3>Add Expense</h3>
-                        <form onSubmit={(e) => { e.preventDefault(); onAdd({ description, amount: parseFloat(amount), category, date }); }}>
+                        <div className="modal-header">
+                            <h3>Add Expense</h3>
+                        </div>
+                        <form onSubmit={(e) => { e.preventDefault(); if(description && amount) onAdd({ description, amount: parseFloat(amount), category, date }); }}>
                             <div className="form-group">
                                 <label>Description *</label>
                                 <input type="text" value={description} onChange={(e) => setDescription(e.target.value)} required placeholder="e.g., Lunch at Tsukiji Market" />
@@ -823,8 +902,8 @@
                             <div className="form-group">
                                 <label>Category *</label>
                                 <select value={category} onChange={(e) => setCategory(e.target.value)}>
-                                    {defaultBudget.map((item, i) => (
-                                        <option key={i} value={item.category}>{item.category}</option>
+                                    {categories.map((cat, i) => (
+                                        <option key={i} value={cat.category}>{cat.category}</option>
                                     ))}
                                 </select>
                             </div>
@@ -835,6 +914,84 @@
                             <div style={{display:'flex',gap:'10px',justifyContent:'flex-end'}}>
                                 <button type="button" className="btn btn-secondary" onClick={onClose}>Cancel</button>
                                 <button type="submit" className="btn btn-primary">Add Expense</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            );
+        }
+
+        function BudgetModal({ budget, onClose, onSave }) {
+            const [category, setCategory] = useState(budget?.category || '');
+            const [projected, setProjected] = useState(budget?.projected || '');
+
+            return (
+                <div className="modal active" onClick={onClose}>
+                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                        <div className="modal-header">
+                            <h3>{budget ? 'Edit Budget Category' : 'Add Budget Category'}</h3>
+                        </div>
+                        <form onSubmit={(e) => { e.preventDefault(); if(category && projected) onSave({ category, projected: parseFloat(projected) }); }}>
+                            <div className="form-group">
+                                <label>Category Name *</label>
+                                <input type="text" value={category} onChange={(e) => setCategory(e.target.value)} required placeholder="e.g., Gifts & Souvenirs" disabled={!!budget} />
+                            </div>
+                            <div className="form-group">
+                                <label>Projected Amount ($) *</label>
+                                <input type="number" step="0.01" value={projected} onChange={(e) => setProjected(e.target.value)} required placeholder="0.00" />
+                            </div>
+                            <div style={{display:'flex',gap:'10px',justifyContent:'flex-end'}}>
+                                <button type="button" className="btn btn-secondary" onClick={onClose}>Cancel</button>
+                                <button type="submit" className="btn btn-primary">{budget ? 'Update' : 'Add'}</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            );
+        }
+
+        function DayModal({ day, onClose, onSave }) {
+            const [dayNum, setDayNum] = useState(day?.day || '');
+            const [date, setDate] = useState(day?.date || '');
+            const [location, setLocation] = useState(day?.location || '');
+            const [highlights, setHighlights] = useState(day?.highlights || '');
+            const [cost, setCost] = useState(day?.cost || '');
+
+            return (
+                <div className="modal active" onClick={onClose}>
+                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                        <div className="modal-header">
+                            <h3>{day ? 'Edit Day' : 'Add New Day'}</h3>
+                        </div>
+                        <form onSubmit={(e) => { 
+                            e.preventDefault(); 
+                            if(dayNum && date && location && highlights && cost) {
+                                onSave({ day: dayNum, date, location, highlights, cost: parseFloat(cost) }); 
+                            }
+                        }}>
+                            <div className="form-group">
+                                <label>Day Label *</label>
+                                <input type="text" value={dayNum} onChange={(e) => setDayNum(e.target.value)} required placeholder="e.g., Day 15" />
+                            </div>
+                            <div className="form-group">
+                                <label>Date *</label>
+                                <input type="date" value={date} onChange={(e) => setDate(e.target.value)} required />
+                            </div>
+                            <div className="form-group">
+                                <label>Location *</label>
+                                <input type="text" value={location} onChange={(e) => setLocation(e.target.value)} required placeholder="e.g., Tokyo (Ginza)" />
+                            </div>
+                            <div className="form-group">
+                                <label>Highlights *</label>
+                                <textarea value={highlights} onChange={(e) => setHighlights(e.target.value)} required placeholder="What will you do this day?"></textarea>
+                            </div>
+                            <div className="form-group">
+                                <label>Estimated Cost ($) *</label>
+                                <input type="number" step="0.01" value={cost} onChange={(e) => setCost(e.target.value)} required placeholder="0.00" />
+                            </div>
+                            <div style={{display:'flex',gap:'10px',justifyContent:'flex-end'}}>
+                                <button type="button" className="btn btn-secondary" onClick={onClose}>Cancel</button>
+                                <button type="submit" className="btn btn-primary">{day ? 'Update' : 'Add Day'}</button>
                             </div>
                         </form>
                     </div>
