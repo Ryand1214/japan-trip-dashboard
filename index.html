@@ -532,7 +532,32 @@
                     }
 
                     if (expensesRes.data) setExpenses(expensesRes.data);
-                    if (budgetRes.data) setBudgetCategories(budgetRes.data);
+                    
+                    // Auto-create default budget categories if none exist
+                    if (budgetRes.data && budgetRes.data.length === 0) {
+                        const defaultCategories = [
+                            {category:"Round-trip Flights (2 people)",projected:2000,sort_order:1},
+                            {category:"Hotels (14 nights)",projected:1200,sort_order:2},
+                            {category:"Shinkansen",projected:260,sort_order:3},
+                            {category:"Local Transport",projected:150,sort_order:4},
+                            {category:"Tokyo Disneyland",projected:75,sort_order:5},
+                            {category:"Universal Studios Japan",projected:75,sort_order:6},
+                            {category:"Food ($40/day x 14)",projected:560,sort_order:7},
+                            {category:"Temple/Shrine fees",projected:50,sort_order:8},
+                            {category:"SIM card",projected:30,sort_order:9},
+                            {category:"Souvenirs",projected:150,sort_order:10},
+                            {category:"Emergency Buffer",projected:150,sort_order:11}
+                        ];
+                        
+                        const { error: insertError } = await client.from('budget_categories').insert(defaultCategories);
+                        if (!insertError) {
+                            // Reload budget categories
+                            const { data: newBudgetData } = await client.from('budget_categories').select('*').order('sort_order');
+                            if (newBudgetData) setBudgetCategories(newBudgetData);
+                        }
+                    } else if (budgetRes.data) {
+                        setBudgetCategories(budgetRes.data);
+                    }
                 } catch (err) {
                     setError('Failed to load data: ' + err.message);
                 }
@@ -549,12 +574,23 @@
             };
 
             const addActivity = async (dayIndex, activity) => {
-                if (!supabase) return;
+                if (!supabase) {
+                    alert('Database not connected. Please refresh the page.');
+                    return;
+                }
                 try {
-                    const { error } = await supabase.from('activities').insert([{ day_index: dayIndex, ...activity }]);
-                    if (error) throw error;
+                    setError(null);
+                    const { data, error } = await supabase.from('activities').insert([{ day_index: dayIndex, ...activity }]);
+                    if (error) {
+                        console.error('Activity insert error:', error);
+                        throw new Error(error.message || 'Failed to add activity');
+                    }
+                    console.log('Activity added successfully:', data);
                 } catch (err) {
-                    alert('Failed to add activity: ' + err.message);
+                    const errorMsg = 'Failed to add activity: ' + err.message;
+                    setError(errorMsg);
+                    alert(errorMsg + '\n\nPlease check:\n1. You have the correct Supabase credentials\n2. The activities table exists\n3. You have internet connection');
+                    console.error('Add activity error:', err);
                 }
             };
 
@@ -569,12 +605,23 @@
             };
 
             const addExpense = async (expense) => {
-                if (!supabase) return;
+                if (!supabase) {
+                    alert('Database not connected. Please refresh the page.');
+                    return;
+                }
                 try {
-                    const { error } = await supabase.from('expenses').insert([expense]);
-                    if (error) throw error;
+                    setError(null);
+                    const { data, error } = await supabase.from('expenses').insert([expense]);
+                    if (error) {
+                        console.error('Expense insert error:', error);
+                        throw new Error(error.message || 'Failed to add expense');
+                    }
+                    console.log('Expense added successfully:', data);
                 } catch (err) {
-                    alert('Failed to add expense: ' + err.message);
+                    const errorMsg = 'Failed to add expense: ' + err.message;
+                    setError(errorMsg);
+                    alert(errorMsg + '\n\nPlease check:\n1. You have the correct Supabase credentials\n2. The expenses table exists\n3. You have internet connection');
+                    console.error('Add expense error:', err);
                 }
             };
 
@@ -658,10 +705,42 @@
                     <header>
                         <h1>🇯🇵 Japan Adventure 2026</h1>
                         <p className="trip-dates">July 19 - August 2, 2026 | 14 Days</p>
-                        <span className="sync-badge">
-                            <span className="sync-dot"></span>
-                            Live Sync Active
-                        </span>
+                        <div style={{display:'flex',gap:'10px',alignItems:'center',flexWrap:'wrap'}}>
+                            <span className="sync-badge">
+                                <span className="sync-dot"></span>
+                                Live Sync Active
+                            </span>
+                            {supabase && (
+                                <span style={{fontSize:'0.8em',color:'#10b981',background:'#022c22',padding:'4px 10px',borderRadius:'12px'}}>
+                                    ✅ Connected
+                                </span>
+                            )}
+                            <button 
+                                style={{fontSize:'0.8em',background:'#334155',color:'#f1f5f9',border:'none',padding:'6px 12px',borderRadius:'6px',cursor:'pointer'}}
+                                onClick={() => {
+                                    const info = `
+📊 DIAGNOSTIC INFO:
+
+Database Connected: ${supabase ? 'YES ✅' : 'NO ❌'}
+Activities Loaded: ${Object.keys(activities).length} days with activities
+Expenses Loaded: ${expenses.length} expenses
+Budget Categories: ${budgetCategories.length} categories
+
+Supabase URL: ${localStorage.getItem('supabase_url')}
+
+If you see errors, make sure:
+1. The tables exist (activities, expenses, budget_categories)
+2. You're using the correct Supabase credentials
+3. The tables have RLS policies enabled
+
+Check browser console (F12) for detailed errors.
+                                    `;
+                                    alert(info);
+                                }}
+                            >
+                                🔍 Diagnostics
+                            </button>
+                        </div>
                     </header>
 
                     {error && <div className="error-message">⚠️ {error}</div>}
