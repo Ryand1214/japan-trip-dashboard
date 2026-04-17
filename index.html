@@ -409,6 +409,22 @@
         .budget-summary-value.positive { color: #10b981; }
         .budget-summary-value.negative { color: #ef4444; }
         
+        .link-button {
+            display: block;
+            background: linear-gradient(135deg, #818cf8 0%, #6366f1 100%);
+            color: white;
+            padding: 12px 16px;
+            borderRadius: 8px;
+            textDecoration: none;
+            transition: all 0.2s;
+            border: 1px solid #6366f1;
+            margin-bottom: 12px;
+        }
+        .link-button:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(129, 140, 248, 0.4);
+        }
+        
         .loading {
             text-align: center;
             padding: 60px 20px;
@@ -464,15 +480,18 @@
             const [activities, setActivities] = useState({});
             const [expenses, setExpenses] = useState([]);
             const [budgetCategories, setBudgetCategories] = useState([]);
+            const [links, setLinks] = useState([]);
             const [itinerary, setItinerary] = useState(itineraryDays);
             const [budgetTab, setBudgetTab] = useState('overview');
             const [modalOpen, setModalOpen] = useState(false);
             const [expenseModalOpen, setExpenseModalOpen] = useState(false);
             const [budgetModalOpen, setBudgetModalOpen] = useState(false);
             const [dayModalOpen, setDayModalOpen] = useState(false);
+            const [linkModalOpen, setLinkModalOpen] = useState(false);
             const [currentDay, setCurrentDay] = useState(null);
             const [editingBudget, setEditingBudget] = useState(null);
             const [editingDay, setEditingDay] = useState(null);
+            const [editingLink, setEditingLink] = useState(null);
             const [loading, setLoading] = useState(true);
             const [error, setError] = useState(null);
 
@@ -486,7 +505,6 @@
                 localStorage.setItem('supabase_url', savedUrl);
                 localStorage.setItem('supabase_key', savedKey);
                 
-                // Load saved itinerary
                 const savedItinerary = localStorage.getItem('itinerary');
                 if (savedItinerary) {
                     try {
@@ -516,10 +534,11 @@
                 setError(null);
                 
                 try {
-                    const [activitiesRes, expensesRes, budgetRes] = await Promise.all([
+                    const [activitiesRes, expensesRes, budgetRes, linksRes] = await Promise.all([
                         client.from('activities').select('*'),
                         client.from('expenses').select('*').order('date', { ascending: false }),
-                        client.from('budget_categories').select('*').order('sort_order')
+                        client.from('budget_categories').select('*').order('sort_order'),
+                        client.from('links').select('*').order('sort_order')
                     ]);
 
                     if (activitiesRes.data) {
@@ -533,7 +552,6 @@
 
                     if (expensesRes.data) setExpenses(expensesRes.data);
                     
-                    // Auto-create default budget categories if none exist
                     if (budgetRes.data && budgetRes.data.length === 0) {
                         const defaultCategories = [
                             {category:"Round-trip Flights (2 people)",projected:2000,sort_order:1},
@@ -551,13 +569,14 @@
                         
                         const { error: insertError } = await client.from('budget_categories').insert(defaultCategories);
                         if (!insertError) {
-                            // Reload budget categories
                             const { data: newBudgetData } = await client.from('budget_categories').select('*').order('sort_order');
                             if (newBudgetData) setBudgetCategories(newBudgetData);
                         }
                     } else if (budgetRes.data) {
                         setBudgetCategories(budgetRes.data);
                     }
+
+                    if (linksRes.data) setLinks(linksRes.data);
                 } catch (err) {
                     setError('Failed to load data: ' + err.message);
                 }
@@ -570,27 +589,17 @@
                     .on('postgres_changes', { event: '*', schema: 'public', table: 'activities' }, () => loadData(client))
                     .on('postgres_changes', { event: '*', schema: 'public', table: 'expenses' }, () => loadData(client))
                     .on('postgres_changes', { event: '*', schema: 'public', table: 'budget_categories' }, () => loadData(client))
+                    .on('postgres_changes', { event: '*', schema: 'public', table: 'links' }, () => loadData(client))
                     .subscribe();
             };
 
             const addActivity = async (dayIndex, activity) => {
-                if (!supabase) {
-                    alert('Database not connected. Please refresh the page.');
-                    return;
-                }
+                if (!supabase) return;
                 try {
-                    setError(null);
-                    const { data, error } = await supabase.from('activities').insert([{ day_index: dayIndex, ...activity }]);
-                    if (error) {
-                        console.error('Activity insert error:', error);
-                        throw new Error(error.message || 'Failed to add activity');
-                    }
-                    console.log('Activity added successfully:', data);
+                    const { error } = await supabase.from('activities').insert([{ day_index: dayIndex, ...activity }]);
+                    if (error) throw error;
                 } catch (err) {
-                    const errorMsg = 'Failed to add activity: ' + err.message;
-                    setError(errorMsg);
-                    alert(errorMsg + '\n\nPlease check:\n1. You have the correct Supabase credentials\n2. The activities table exists\n3. You have internet connection');
-                    console.error('Add activity error:', err);
+                    alert('Failed to add activity: ' + err.message);
                 }
             };
 
@@ -605,23 +614,12 @@
             };
 
             const addExpense = async (expense) => {
-                if (!supabase) {
-                    alert('Database not connected. Please refresh the page.');
-                    return;
-                }
+                if (!supabase) return;
                 try {
-                    setError(null);
-                    const { data, error } = await supabase.from('expenses').insert([expense]);
-                    if (error) {
-                        console.error('Expense insert error:', error);
-                        throw new Error(error.message || 'Failed to add expense');
-                    }
-                    console.log('Expense added successfully:', data);
+                    const { error } = await supabase.from('expenses').insert([expense]);
+                    if (error) throw error;
                 } catch (err) {
-                    const errorMsg = 'Failed to add expense: ' + err.message;
-                    setError(errorMsg);
-                    alert(errorMsg + '\n\nPlease check:\n1. You have the correct Supabase credentials\n2. The expenses table exists\n3. You have internet connection');
-                    console.error('Add expense error:', err);
+                    alert('Failed to add expense: ' + err.message);
                 }
             };
 
@@ -687,6 +685,37 @@
                 localStorage.setItem('itinerary', JSON.stringify(newItinerary));
             };
 
+            const addLink = async (link) => {
+                if (!supabase) return;
+                try {
+                    const maxSort = links.length > 0 ? Math.max(...links.map(l => l.sort_order || 0), 0) : 0;
+                    const { error } = await supabase.from('links').insert([{ ...link, sort_order: maxSort + 1 }]);
+                    if (error) throw error;
+                } catch (err) {
+                    alert('Failed to add link: ' + err.message);
+                }
+            };
+
+            const updateLink = async (id, updates) => {
+                if (!supabase) return;
+                try {
+                    const { error } = await supabase.from('links').update(updates).eq('id', id);
+                    if (error) throw error;
+                } catch (err) {
+                    alert('Failed to update link: ' + err.message);
+                }
+            };
+
+            const deleteLink = async (id) => {
+                if (!supabase || !confirm('Delete this link?')) return;
+                try {
+                    const { error } = await supabase.from('links').delete().eq('id', id);
+                    if (error) throw error;
+                } catch (err) {
+                    alert('Failed to delete link: ' + err.message);
+                }
+            };
+
             const calculateBudget = () => {
                 const projectedTotal = budgetCategories.reduce((sum, item) => sum + parseFloat(item.projected), 0);
                 const actualTotal = expenses.reduce((sum, exp) => sum + exp.amount, 0);
@@ -705,42 +734,10 @@
                     <header>
                         <h1>🇯🇵 Japan Adventure 2026</h1>
                         <p className="trip-dates">July 19 - August 2, 2026 | 14 Days</p>
-                        <div style={{display:'flex',gap:'10px',alignItems:'center',flexWrap:'wrap'}}>
-                            <span className="sync-badge">
-                                <span className="sync-dot"></span>
-                                Live Sync Active
-                            </span>
-                            {supabase && (
-                                <span style={{fontSize:'0.8em',color:'#10b981',background:'#022c22',padding:'4px 10px',borderRadius:'12px'}}>
-                                    ✅ Connected
-                                </span>
-                            )}
-                            <button 
-                                style={{fontSize:'0.8em',background:'#334155',color:'#f1f5f9',border:'none',padding:'6px 12px',borderRadius:'6px',cursor:'pointer'}}
-                                onClick={() => {
-                                    const info = `
-📊 DIAGNOSTIC INFO:
-
-Database Connected: ${supabase ? 'YES ✅' : 'NO ❌'}
-Activities Loaded: ${Object.keys(activities).length} days with activities
-Expenses Loaded: ${expenses.length} expenses
-Budget Categories: ${budgetCategories.length} categories
-
-Supabase URL: ${localStorage.getItem('supabase_url')}
-
-If you see errors, make sure:
-1. The tables exist (activities, expenses, budget_categories)
-2. You're using the correct Supabase credentials
-3. The tables have RLS policies enabled
-
-Check browser console (F12) for detailed errors.
-                                    `;
-                                    alert(info);
-                                }}
-                            >
-                                🔍 Diagnostics
-                            </button>
-                        </div>
+                        <span className="sync-badge">
+                            <span className="sync-dot"></span>
+                            Live Sync Active
+                        </span>
                     </header>
 
                     {error && <div className="error-message">⚠️ {error}</div>}
@@ -907,6 +904,75 @@ Check browser console (F12) for detailed errors.
                                     </>
                                 )}
                             </div>
+
+                            <div className="card">
+                                <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:'20px'}}>
+                                    <h2>🔗 Links & Resources</h2>
+                                    <button className="add-btn" onClick={() => { setEditingLink(null); setLinkModalOpen(true); }}>+ Add Link</button>
+                                </div>
+                                
+                                {links.length > 0 ? (
+                                    links.map(link => (
+                                        <div key={link.id} style={{marginBottom:'12px'}}>
+                                            <a 
+                                                href={link.url} 
+                                                target="_blank" 
+                                                rel="noopener noreferrer"
+                                                style={{
+                                                    display: 'block',
+                                                    background: 'linear-gradient(135deg, #818cf8 0%, #6366f1 100%)',
+                                                    color: 'white',
+                                                    padding: '12px 16px',
+                                                    borderRadius: '8px',
+                                                    textDecoration: 'none',
+                                                    transition: 'all 0.2s',
+                                                    border: '1px solid #6366f1'
+                                                }}
+                                                onMouseEnter={(e) => {
+                                                    e.currentTarget.style.transform = 'scale(1.02)';
+                                                    e.currentTarget.style.boxShadow = '0 0 20px rgba(129, 140, 248, 0.4)';
+                                                }}
+                                                onMouseLeave={(e) => {
+                                                    e.currentTarget.style.transform = 'scale(1)';
+                                                    e.currentTarget.style.boxShadow = 'none';
+                                                }}
+                                            >
+                                                <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+                                                    <div style={{flex:1}}>
+                                                        <div style={{fontWeight:'600',marginBottom:'4px'}}>{link.title}</div>
+                                                        {link.description && <div style={{fontSize:'0.85em',opacity:0.9}}>{link.description}</div>}
+                                                        {link.category && <div style={{fontSize:'0.75em',marginTop:'4px',opacity:0.7}}>📁 {link.category}</div>}
+                                                    </div>
+                                                    <div style={{display:'flex',gap:'8px',marginLeft:'10px'}}>
+                                                        <button 
+                                                            className="edit-btn" 
+                                                            onClick={(e) => { 
+                                                                e.preventDefault(); 
+                                                                setEditingLink(link); 
+                                                                setLinkModalOpen(true); 
+                                                            }}
+                                                            style={{background:'rgba(255,255,255,0.2)'}}
+                                                        >
+                                                            Edit
+                                                        </button>
+                                                        <button 
+                                                            className="delete-btn" 
+                                                            onClick={(e) => { 
+                                                                e.preventDefault(); 
+                                                                deleteLink(link.id); 
+                                                            }}
+                                                        >
+                                                            Delete
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <div className="no-activities">No links added yet</div>
+                                )}
+                            </div>
                         </div>
                     </div>
 
@@ -914,6 +980,7 @@ Check browser console (F12) for detailed errors.
                     {expenseModalOpen && <ExpenseModal categories={budgetCategories} onClose={() => setExpenseModalOpen(false)} onAdd={(exp) => { addExpense(exp); setExpenseModalOpen(false); }} />}
                     {budgetModalOpen && <BudgetModal budget={editingBudget} onClose={() => setBudgetModalOpen(false)} onSave={(cat) => { editingBudget ? updateBudgetCategory(editingBudget.id, cat) : addBudgetCategory(cat); setBudgetModalOpen(false); }} />}
                     {dayModalOpen && <DayModal day={editingDay} onClose={() => setDayModalOpen(false)} onSave={(d) => { editingDay ? updateDay(editingDay.index, d) : addDay(d); setDayModalOpen(false); }} />}
+                    {linkModalOpen && <LinkModal link={editingLink} onClose={() => setLinkModalOpen(false)} onSave={(l) => { editingLink ? updateLink(editingLink.id, l) : addLink(l); setLinkModalOpen(false); }} />}
                 </div>
             );
         }
@@ -1071,6 +1138,70 @@ Check browser console (F12) for detailed errors.
                             <div style={{display:'flex',gap:'10px',justifyContent:'flex-end'}}>
                                 <button type="button" className="btn btn-secondary" onClick={onClose}>Cancel</button>
                                 <button type="submit" className="btn btn-primary">{day ? 'Update' : 'Add Day'}</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            );
+        }
+
+        function LinkModal({ link, onClose, onSave }) {
+            const [title, setTitle] = useState(link?.title || '');
+            const [url, setUrl] = useState(link?.url || '');
+            const [description, setDescription] = useState(link?.description || '');
+            const [category, setCategory] = useState(link?.category || '');
+
+            return (
+                <div className="modal active" onClick={onClose}>
+                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                        <div className="modal-header">
+                            <h3>{link ? 'Edit Link' : 'Add Link'}</h3>
+                        </div>
+                        <form onSubmit={(e) => { 
+                            e.preventDefault(); 
+                            if(title && url) onSave({ title, url, description, category }); 
+                        }}>
+                            <div className="form-group">
+                                <label>Link Title *</label>
+                                <input 
+                                    type="text" 
+                                    value={title} 
+                                    onChange={(e) => setTitle(e.target.value)} 
+                                    required 
+                                    placeholder="e.g., Hotel Reservation" 
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>URL *</label>
+                                <input 
+                                    type="url" 
+                                    value={url} 
+                                    onChange={(e) => setUrl(e.target.value)} 
+                                    required 
+                                    placeholder="https://..." 
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Description</label>
+                                <input 
+                                    type="text" 
+                                    value={description} 
+                                    onChange={(e) => setDescription(e.target.value)} 
+                                    placeholder="Brief note about this link" 
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Category</label>
+                                <input 
+                                    type="text" 
+                                    value={category} 
+                                    onChange={(e) => setCategory(e.target.value)} 
+                                    placeholder="e.g., Hotels, Transport, Food" 
+                                />
+                            </div>
+                            <div style={{display:'flex',gap:'10px',justifyContent:'flex-end'}}>
+                                <button type="button" className="btn btn-secondary" onClick={onClose}>Cancel</button>
+                                <button type="submit" className="btn btn-primary">{link ? 'Update' : 'Add Link'}</button>
                             </div>
                         </form>
                     </div>
