@@ -50,7 +50,6 @@
             animation: pulse 2s infinite;
         }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
-        
         .dashboard-grid {
             display: grid;
             grid-template-columns: 1fr 400px;
@@ -78,7 +77,6 @@
             padding: 20px;
             margin-bottom: 15px;
             border-left: 4px solid #818cf8;
-            transition: transform 0.2s;
             border: 1px solid #334155;
         }
         .day-card:hover { transform: translateX(5px); }
@@ -130,41 +128,15 @@
             font-size: 0.9em;
             font-weight: 500;
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
         }
         .add-btn:hover { 
             background: #6366f1; 
             transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(129, 140, 248, 0.6),
-                        0 0 40px rgba(129, 140, 248, 0.4),
-                        0 0 60px rgba(129, 140, 248, 0.2);
-            animation: shine 1.5s ease-in-out infinite;
+            box-shadow: 0 0 20px rgba(129, 140, 248, 0.6), 0 0 40px rgba(129, 140, 248, 0.4);
         }
         .add-btn:active {
-            animation: flashRed 0.3s ease;
+            background: #ef4444;
             transform: scale(0.98);
-        }
-        @keyframes shine {
-            0%, 100% {
-                box-shadow: 0 0 20px rgba(129, 140, 248, 0.6),
-                            0 0 40px rgba(129, 140, 248, 0.4),
-                            0 0 60px rgba(129, 140, 248, 0.2);
-            }
-            50% {
-                box-shadow: 0 0 30px rgba(129, 140, 248, 0.8),
-                            0 0 60px rgba(129, 140, 248, 0.6),
-                            0 0 90px rgba(129, 140, 248, 0.4);
-            }
-        }
-        @keyframes flashRed {
-            0%, 100% {
-                background: #6366f1;
-            }
-            50% {
-                background: #ef4444;
-                box-shadow: 0 0 30px rgba(239, 68, 68, 0.8);
-            }
         }
         .activity-item, .expense-item {
             background: #0f172a;
@@ -175,11 +147,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            animation: slideIn 0.3s ease;
-        }
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
         }
         .activity-content, .expense-content { flex: 1; }
         .activity-name, .expense-name { color: #f1f5f9; font-weight: 500; margin-bottom: 4px; }
@@ -193,7 +160,6 @@
         .expense-amount {
             color: #ef4444;
             font-weight: 700;
-            font-size: 1.1em;
         }
         .delete-btn {
             background: #7f1d1d;
@@ -203,11 +169,9 @@
             border-radius: 4px;
             cursor: pointer;
             font-size: 0.8em;
-            transition: all 0.2s;
         }
         .delete-btn:hover { 
             background: #991b1b;
-            transform: scale(1.05);
         }
         .modal {
             display: none;
@@ -268,7 +232,6 @@
         .btn-primary:hover { background: #6366f1; }
         .btn-secondary { background: #334155; color: #f1f5f9; }
         .btn-secondary:hover { background: #475569; }
-        
         .budget-tabs {
             display: flex;
             gap: 10px;
@@ -284,14 +247,11 @@
             color: #94a3b8;
             border-bottom: 2px solid transparent;
             margin-bottom: -2px;
-            transition: all 0.2s;
         }
         .budget-tab.active {
             color: #818cf8;
             border-bottom-color: #818cf8;
         }
-        .budget-tab:hover { color: #818cf8; }
-        
         .budget-item {
             display: flex;
             justify-content: space-between;
@@ -301,20 +261,9 @@
             background: #0f172a;
             border-radius: 6px;
             margin-bottom: 8px;
-            transition: all 0.2s;
         }
-        .budget-item:hover {
-            background: #1e293b;
-            border-color: #818cf8;
-        }
-        .budget-item-content {
-            flex: 1;
-            color: #f1f5f9;
-        }
-        .budget-item-actions {
-            display: flex;
-            gap: 8px;
-        }
+        .budget-item-content { flex: 1; color: #f1f5f9; }
+        .budget-item-actions { display: flex; gap: 8px; }
         .edit-btn {
             background: #334155;
             color: #cbd5e1;
@@ -324,24 +273,8 @@
             cursor: pointer;
             font-size: 0.8em;
         }
-        .edit-btn:hover {
-            background: #475569;
-        }
-        .budget-comparison {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-            color: #f1f5f9;
-        }
-        .budget-projected {
-            color: #64748b;
-            font-size: 0.9em;
-            text-decoration: line-through;
-        }
-        .budget-actual {
-            color: #10b981;
-            font-weight: 600;
-        }
+        .budget-projected { color: #64748b; font-size: 0.9em; text-decoration: line-through; }
+        .budget-actual { color: #10b981; font-weight: 600; }
         .budget-savings {
             color: #10b981;
             font-size: 0.85em;
@@ -378,13 +311,6 @@
             justify-content: center;
             color: white;
             font-weight: bold;
-            transition: width 0.3s ease, background 0.3s ease;
-        }
-        .budget-progress-fill.warning {
-            background: linear-gradient(90deg, #f59e0b 0%, #d97706 100%);
-        }
-        .budget-progress-fill.danger {
-            background: linear-gradient(90deg, #ef4444 0%, #dc2626 100%);
         }
         .budget-summary {
             display: grid;
@@ -409,25 +335,6 @@
             font-weight: bold;
             color: #f1f5f9;
         }
-        .budget-summary-value.positive { color: #10b981; }
-        .budget-summary-value.negative { color: #ef4444; }
-        
-        .link-button {
-            display: block;
-            background: linear-gradient(135deg, #818cf8 0%, #6366f1 100%);
-            color: white;
-            padding: 12px 16px;
-            borderRadius: 8px;
-            textDecoration: none;
-            transition: all 0.2s;
-            border: 1px solid #6366f1;
-            margin-bottom: 12px;
-        }
-        .link-button:hover {
-            transform: scale(1.02);
-            box-shadow: 0 0 20px rgba(129, 140, 248, 0.4);
-        }
-        
         .loading {
             text-align: center;
             padding: 60px 20px;
@@ -451,13 +358,11 @@
         @media (max-width: 968px) {
             .dashboard-grid { grid-template-columns: 1fr; }
             h1 { font-size: 2em; }
-            .budget-summary { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
     <div id="root"></div>
-
     <script type="text/babel">
         const { useState, useEffect } = React;
 
@@ -644,7 +549,6 @@
                     if (error) throw error;
                 } catch (err) {
                     alert('Failed to add budget category: ' + err.message);
-                    console.error('Budget error:', err);
                 }
             };
 
@@ -728,263 +632,189 @@
                 return { projectedTotal, actualTotal, difference, percentUsed };
             };
 
-            if (loading) return <div className="loading">Loading your trip dashboard...</div>;
+            if (loading) return React.createElement('div', { className: 'loading' }, 'Loading your trip dashboard...');
 
             const budget = calculateBudget();
 
-            return (
-                <div className="container">
-                    <header>
-                        <h1>🇯🇵 Japan Adventure 2026</h1>
-                        <p className="trip-dates">July 19 - August 2, 2026 | 14 Days</p>
-                        <span className="sync-badge">
-                            <span className="sync-dot"></span>
-                            Live Sync Active
-                        </span>
-                    </header>
+            return React.createElement('div', { className: 'container' },
+                React.createElement('header', null,
+                    React.createElement('h1', null, '🇯🇵 Japan Adventure 2026'),
+                    React.createElement('p', { className: 'trip-dates' }, 'July 19 - August 2, 2026 | 14 Days'),
+                    React.createElement('span', { className: 'sync-badge' },
+                        React.createElement('span', { className: 'sync-dot' }),
+                        'Live Sync Active'
+                    )
+                ),
+                error && React.createElement('div', { className: 'error-message' }, '⚠️ ' + error),
+                React.createElement('div', { className: 'dashboard-grid' },
+                    React.createElement('div', null,
+                        React.createElement('div', { className: 'card' },
+                            React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' } },
+                                React.createElement('h2', null, '📅 Daily Itinerary'),
+                                React.createElement('button', { className: 'add-btn', onClick: () => { setEditingDay(null); setDayModalOpen(true); } }, '+ Add Day')
+                            ),
+                            itinerary.map((day, index) =>
+                                React.createElement('div', { key: index, className: 'day-card' },
+                                    React.createElement('div', { className: 'day-header' },
+                                        React.createElement('div', { className: 'day-info' },
+                                            React.createElement('h3', null, day.day),
+                                            React.createElement('div', { className: 'location' }, '📍 ' + day.location),
+                                            React.createElement('div', { className: 'date' }, new Date(day.date).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' }))
+                                        ),
+                                        React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'flex-end' } },
+                                            React.createElement('div', { className: 'cost-badge' }, '$' + day.cost),
+                                            React.createElement('div', { style: { display: 'flex', gap: '5px' } },
+                                                React.createElement('button', { className: 'edit-btn', onClick: () => { setEditingDay({ ...day, index }); setDayModalOpen(true); } }, 'Edit'),
+                                                React.createElement('button', { className: 'delete-btn', onClick: () => deleteDay(index) }, 'Delete')
+                                            )
+                                        )
+                                    ),
+                                    React.createElement('div', { className: 'highlights' }, day.highlights),
+                                    React.createElement('div', { className: 'activities-section' },
+                                        React.createElement('div', { className: 'activities-header' },
+                                            React.createElement('h4', null, '🎯 Activities'),
+                                            React.createElement('button', { className: 'add-btn', onClick: () => { setCurrentDay(index); setModalOpen(true); } }, '+ Add Activity')
+                                        ),
+                                        activities[index] && activities[index].length > 0 ?
+                                            activities[index].map(act =>
+                                                React.createElement('div', { key: act.id, className: 'activity-item' },
+                                                    React.createElement('div', { className: 'activity-content' },
+                                                        React.createElement('div', { className: 'activity-name' }, act.name),
+                                                        React.createElement('div', { className: 'activity-time' }, (act.time ? '⏰ ' + act.time : '') + (act.notes ? ' • ' + act.notes : '')),
+                                                        act.cost && React.createElement('div', { className: 'activity-cost' }, '💰 $' + act.cost)
+                                                    ),
+                                                    React.createElement('button', { className: 'delete-btn', onClick: () => deleteActivity(act.id) }, 'Delete')
+                                                )
+                                            )
+                                            : React.createElement('div', { className: 'no-activities' }, 'No activities added yet')
+                                    )
+                                )
+                            )
+                        )
+                    ),
+                    React.createElement('div', null,
+                        React.createElement('div', { className: 'card' },
+                            React.createElement('h2', null, '💰 Budget Tracker'),
+                            React.createElement('div', { className: 'budget-tabs' },
+                                React.createElement('button', { className: 'budget-tab ' + (budgetTab === 'overview' ? 'active' : ''), onClick: () => setBudgetTab('overview') }, 'Overview'),
+                                React.createElement('button', { className: 'budget-tab ' + (budgetTab === 'expenses' ? 'active' : ''), onClick: () => setBudgetTab('expenses') }, 'Expenses (' + expenses.length + ')')
+                            ),
+                            budgetTab === 'overview' &&
+                                React.createElement('div', null,
+                                    React.createElement('div', { className: 'budget-summary' },
+                                        React.createElement('div', { className: 'budget-summary-item' },
+                                            React.createElement('div', { className: 'budget-summary-label' }, 'Projected'),
+                                            React.createElement('div', { className: 'budget-summary-value' }, '$' + budget.projectedTotal.toFixed(0))
+                                        ),
+                                        React.createElement('div', { className: 'budget-summary-item' },
+                                            React.createElement('div', { className: 'budget-summary-label' }, 'Actual Spent'),
+                                            React.createElement('div', { className: 'budget-summary-value ' + (budget.actualTotal <= budget.projectedTotal ? 'positive' : 'negative') }, '$' + budget.actualTotal.toFixed(0))
+                                        )
+                                    ),
+                                    React.createElement('div', { className: 'budget-progress' },
+                                        React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', marginBottom: '8px', fontSize: '0.9em', color: '#f1f5f9' } },
+                                            React.createElement('strong', null, 'Budget Used:'),
+                                            React.createElement('strong', null, '$' + budget.actualTotal.toFixed(0) + ' / $5,000')
+                                        ),
+                                        React.createElement('div', { className: 'budget-progress-bar' },
+                                            React.createElement('div', { className: 'budget-progress-fill', style: { width: Math.min(budget.percentUsed, 100) + '%' } }, budget.percentUsed.toFixed(0) + '%')
+                                        ),
+                                        React.createElement('div', { style: { textAlign: 'center', marginTop: '10px', fontWeight: 'bold', fontSize: '0.95em', color: budget.difference >= 0 ? '#10b981' : '#ef4444' } },
+                                            (budget.difference >= 0 ? '✅ Under Budget: ' : '⚠️ Over Budget: ') + '$' + Math.abs(budget.difference).toFixed(0)
+                                        )
+                                    ),
+                                    React.createElement('div', { style: { marginTop: '20px' } },
+                                        React.createElement('button', { className: 'add-btn', style: { width: '100%', marginBottom: '15px' }, onClick: () => { setEditingBudget(null); setBudgetModalOpen(true); } }, '+ Add Budget Category')
+                                    ),
+                                    budgetCategories.map(item => {
+                                        const categoryExpenses = expenses.filter(e => e.category === item.category);
+                                        const actualCost = categoryExpenses.reduce((sum, e) => sum + e.amount, 0);
+                                        const hasSavings = actualCost > 0 && actualCost < item.projected;
+                                        const hasOverspend = actualCost > item.projected;
 
-                    {error && <div className="error-message">⚠️ {error}</div>}
-
-                    <div className="dashboard-grid">
-                        <div>
-                            <div className="card">
-                                <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:'20px'}}>
-                                    <h2>📅 Daily Itinerary</h2>
-                                    <button className="add-btn" onClick={() => { setEditingDay(null); setDayModalOpen(true); }}>+ Add Day</button>
-                                </div>
-                                {itinerary.map((day, index) => (
-                                    <div key={index} className="day-card">
-                                        <div className="day-header">
-                                            <div className="day-info">
-                                                <h3>{day.day}</h3>
-                                                <div className="location">📍 {day.location}</div>
-                                                <div className="date">{new Date(day.date).toLocaleDateString('en-US', {weekday:'long',month:'long',day:'numeric',year:'numeric'})}</div>
-                                            </div>
-                                            <div style={{display:'flex',flexDirection:'column',gap:'8px',alignItems:'flex-end'}}>
-                                                <div className="cost-badge">${day.cost}</div>
-                                                <div style={{display:'flex',gap:'5px'}}>
-                                                    <button className="edit-btn" onClick={() => { setEditingDay({...day, index}); setDayModalOpen(true); }}>Edit</button>
-                                                    <button className="delete-btn" onClick={() => deleteDay(index)}>Delete</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="highlights">{day.highlights}</div>
-                                        <div className="activities-section">
-                                            <div className="activities-header">
-                                                <h4>🎯 Activities</h4>
-                                                <button className="add-btn" onClick={() => { setCurrentDay(index); setModalOpen(true); }}>+ Add Activity</button>
-                                            </div>
-                                            {activities[index] && activities[index].length > 0 ? (
-                                                activities[index].map(act => (
-                                                    <div key={act.id} className="activity-item">
-                                                        <div className="activity-content">
-                                                            <div className="activity-name">{act.name}</div>
-                                                            <div className="activity-time">
-                                                                {act.time && `⏰ ${act.time}`}
-                                                                {act.notes && ` • ${act.notes}`}
-                                                            </div>
-                                                            {act.cost && <div className="activity-cost">💰 ${act.cost}</div>}
-                                                        </div>
-                                                        <button className="delete-btn" onClick={() => deleteActivity(act.id)}>Delete</button>
-                                                    </div>
-                                                ))
-                                            ) : (
-                                                <div className="no-activities">No activities added yet</div>
-                                            )}
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-
-                        <div>
-                            <div className="card">
-                                <h2>💰 Budget Tracker</h2>
-                                
-                                <div className="budget-tabs">
-                                    <button className={`budget-tab ${budgetTab === 'overview' ? 'active' : ''}`} onClick={() => setBudgetTab('overview')}>
-                                        Overview
-                                    </button>
-                                    <button className={`budget-tab ${budgetTab === 'expenses' ? 'active' : ''}`} onClick={() => setBudgetTab('expenses')}>
-                                        Expenses ({expenses.length})
-                                    </button>
-                                </div>
-
-                                {budgetTab === 'overview' && (
-                                    <>
-                                        <div className="budget-summary">
-                                            <div className="budget-summary-item">
-                                                <div className="budget-summary-label">Projected</div>
-                                                <div className="budget-summary-value">${budget.projectedTotal.toFixed(0)}</div>
-                                            </div>
-                                            <div className="budget-summary-item">
-                                                <div className="budget-summary-label">Actual Spent</div>
-                                                <div className={`budget-summary-value ${budget.actualTotal <= budget.projectedTotal ? 'positive' : 'negative'}`}>
-                                                    ${budget.actualTotal.toFixed(0)}
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className="budget-progress">
-                                            <div style={{display:'flex',justifyContent:'space-between',marginBottom:'8px',fontSize:'0.9em',color:'#f1f5f9'}}>
-                                                <strong>Budget Used:</strong>
-                                                <strong>${budget.actualTotal.toFixed(0)} / $5,000</strong>
-                                            </div>
-                                            <div className="budget-progress-bar">
-                                                <div className={`budget-progress-fill ${budget.percentUsed > 90 ? 'danger' : budget.percentUsed > 75 ? 'warning' : ''}`} 
-                                                     style={{width: `${Math.min(budget.percentUsed, 100)}%`}}>
-                                                    {budget.percentUsed.toFixed(0)}%
-                                                </div>
-                                            </div>
-                                            <div style={{textAlign:'center',marginTop:'10px',fontWeight:'bold',fontSize:'0.95em',color: budget.difference >= 0 ? '#10b981' : '#ef4444'}}>
-                                                {budget.difference >= 0 ? '✅ Under Budget: ' : '⚠️ Over Budget: '}
-                                                ${Math.abs(budget.difference).toFixed(0)}
-                                            </div>
-                                        </div>
-
-                                        <div style={{marginTop:'20px'}}>
-                                            <button className="add-btn" style={{width:'100%',marginBottom:'15px'}} onClick={() => { setEditingBudget(null); setBudgetModalOpen(true); }}>
-                                                + Add Budget Category
-                                            </button>
-                                        </div>
-
-                                        {budgetCategories.map((item) => {
-                                            const categoryExpenses = expenses.filter(e => e.category === item.category);
-                                            const actualCost = categoryExpenses.reduce((sum, e) => sum + e.amount, 0);
-                                            const hasSavings = actualCost > 0 && actualCost < item.projected;
-                                            const hasOverspend = actualCost > item.projected;
-
-                                            return (
-                                                <div key={item.id} className="budget-item">
-                                                    <div className="budget-item-content">
-                                                        <span>{item.category}</span>
-                                                    </div>
-                                                    <div className="budget-comparison">
-                                                        {actualCost > 0 ? (
-                                                            <>
-                                                                <span className="budget-projected">${item.projected}</span>
-                                                                <span className="budget-actual">${actualCost.toFixed(0)}</span>
-                                                                {hasSavings && <span className="budget-savings">-${(item.projected - actualCost).toFixed(0)}</span>}
-                                                                {hasOverspend && <span className="budget-overspend">+${(actualCost - item.projected).toFixed(0)}</span>}
-                                                            </>
-                                                        ) : (
-                                                            <span style={{color:'#f1f5f9'}}>${item.projected}</span>
-                                                        )}
-                                                    </div>
-                                                    <div className="budget-item-actions">
-                                                        <button className="edit-btn" onClick={() => { setEditingBudget(item); setBudgetModalOpen(true); }}>Edit</button>
-                                                        <button className="delete-btn" onClick={() => deleteBudgetCategory(item.id)}>Delete</button>
-                                                    </div>
-                                                </div>
-                                            );
-                                        })}
-                                    </>
-                                )}
-
-                                {budgetTab === 'expenses' && (
-                                    <>
-                                        <button className="add-btn" style={{width:'100%',marginBottom:'15px'}} onClick={() => setExpenseModalOpen(true)}>
-                                            + Add Expense
-                                        </button>
-                                        {expenses.length > 0 ? (
-                                            expenses.map(exp => (
-                                                <div key={exp.id} className="expense-item">
-                                                    <div className="expense-content">
-                                                        <div className="expense-name">{exp.description}</div>
-                                                        <div className="expense-date">
-                                                            {exp.category} • {new Date(exp.date).toLocaleDateString()}
-                                                        </div>
-                                                    </div>
-                                                    <div style={{display:'flex',alignItems:'center',gap:'10px'}}>
-                                                        <span className="expense-amount">${exp.amount.toFixed(2)}</span>
-                                                        <button className="delete-btn" onClick={() => deleteExpense(exp.id)}>×</button>
-                                                    </div>
-                                                </div>
-                                            ))
-                                        ) : (
-                                            <div className="no-activities">No expenses tracked yet</div>
-                                        )}
-                                    </>
-                                )}
-                            </div>
-
-                            <div className="card">
-                                <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:'20px'}}>
-                                    <h2>🔗 Links & Resources</h2>
-                                    <button className="add-btn" onClick={() => { setEditingLink(null); setLinkModalOpen(true); }}>+ Add Link</button>
-                                </div>
-                                
-                                {links.length > 0 ? (
-                                    links.map(link => (
-                                        <div key={link.id} style={{marginBottom:'12px'}}>
-                                            <a 
-                                                href={link.url} 
-                                                target="_blank" 
-                                                rel="noopener noreferrer"
-                                                style={{
-                                                    display: 'block',
-                                                    background: 'linear-gradient(135deg, #818cf8 0%, #6366f1 100%)',
-                                                    color: 'white',
-                                                    padding: '12px 16px',
-                                                    borderRadius: '8px',
-                                                    textDecoration: 'none',
-                                                    transition: 'all 0.2s',
-                                                    border: '1px solid #6366f1'
-                                                }}
-                                                onMouseEnter={(e) => {
-                                                    e.currentTarget.style.transform = 'scale(1.02)';
-                                                    e.currentTarget.style.boxShadow = '0 0 20px rgba(129, 140, 248, 0.4)';
-                                                }}
-                                                onMouseLeave={(e) => {
-                                                    e.currentTarget.style.transform = 'scale(1)';
-                                                    e.currentTarget.style.boxShadow = 'none';
-                                                }}
-                                            >
-                                                <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
-                                                    <div style={{flex:1}}>
-                                                        <div style={{fontWeight:'600',marginBottom:'4px'}}>{link.title}</div>
-                                                        {link.description && <div style={{fontSize:'0.85em',opacity:0.9}}>{link.description}</div>}
-                                                        {link.category && <div style={{fontSize:'0.75em',marginTop:'4px',opacity:0.7}}>📁 {link.category}</div>}
-                                                    </div>
-                                                    <div style={{display:'flex',gap:'8px',marginLeft:'10px'}}>
-                                                        <button 
-                                                            className="edit-btn" 
-                                                            onClick={(e) => { 
-                                                                e.preventDefault(); 
-                                                                setEditingLink(link); 
-                                                                setLinkModalOpen(true); 
-                                                            }}
-                                                            style={{background:'rgba(255,255,255,0.2)'}}
-                                                        >
-                                                            Edit
-                                                        </button>
-                                                        <button 
-                                                            className="delete-btn" 
-                                                            onClick={(e) => { 
-                                                                e.preventDefault(); 
-                                                                deleteLink(link.id); 
-                                                            }}
-                                                        >
-                                                            Delete
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    ))
-                                ) : (
-                                    <div className="no-activities">No links added yet</div>
-                                )}
-                            </div>
-                        </div>
-                    </div>
-
-                    {modalOpen && <ActivityModal onClose={() => setModalOpen(false)} onAdd={(act) => { addActivity(currentDay, act); setModalOpen(false); }} />}
-                    {expenseModalOpen && <ExpenseModal categories={budgetCategories} onClose={() => setExpenseModalOpen(false)} onAdd={(exp) => { addExpense(exp); setExpenseModalOpen(false); }} />}
-                    {budgetModalOpen && <BudgetModal budget={editingBudget} onClose={() => setBudgetModalOpen(false)} onSave={(cat) => { editingBudget ? updateBudgetCategory(editingBudget.id, cat) : addBudgetCategory(cat); setBudgetModalOpen(false); }} />}
-                    {dayModalOpen && <DayModal day={editingDay} onClose={() => setDayModalOpen(false)} onSave={(d) => { editingDay ? updateDay(editingDay.index, d) : addDay(d); setDayModalOpen(false); }} />}
-                    {linkModalOpen && <LinkModal link={editingLink} onClose={() => setLinkModalOpen(false)} onSave={(l) => { editingLink ? updateLink(editingLink.id, l) : addLink(l); setLinkModalOpen(false); }} />}
-                </div>
+                                        return React.createElement('div', { key: item.id, className: 'budget-item' },
+                                            React.createElement('div', { className: 'budget-item-content' }, item.category),
+                                            React.createElement('div', { style: { display: 'flex', gap: '8px', alignItems: 'center' } },
+                                                actualCost > 0 ?
+                                                    [
+                                                        React.createElement('span', { key: 'proj', className: 'budget-projected' }, '$' + item.projected),
+                                                        React.createElement('span', { key: 'act', className: 'budget-actual' }, '$' + actualCost.toFixed(0)),
+                                                        hasSavings && React.createElement('span', { key: 'save', className: 'budget-savings' }, '-$' + (item.projected - actualCost).toFixed(0)),
+                                                        hasOverspend && React.createElement('span', { key: 'over', className: 'budget-overspend' }, '+$' + (actualCost - item.projected).toFixed(0))
+                                                    ]
+                                                    : React.createElement('span', { style: { color: '#f1f5f9' } }, '$' + item.projected)
+                                            ),
+                                            React.createElement('div', { className: 'budget-item-actions' },
+                                                React.createElement('button', { className: 'edit-btn', onClick: () => { setEditingBudget(item); setBudgetModalOpen(true); } }, 'Edit'),
+                                                React.createElement('button', { className: 'delete-btn', onClick: () => deleteBudgetCategory(item.id) }, 'Delete')
+                                            )
+                                        );
+                                    })
+                                ),
+                            budgetTab === 'expenses' &&
+                                React.createElement('div', null,
+                                    React.createElement('button', { className: 'add-btn', style: { width: '100%', marginBottom: '15px' }, onClick: () => setExpenseModalOpen(true) }, '+ Add Expense'),
+                                    expenses.length > 0 ?
+                                        expenses.map(exp =>
+                                            React.createElement('div', { key: exp.id, className: 'expense-item' },
+                                                React.createElement('div', { className: 'expense-content' },
+                                                    React.createElement('div', { className: 'expense-name' }, exp.description),
+                                                    React.createElement('div', { className: 'expense-date' }, exp.category + ' • ' + new Date(exp.date).toLocaleDateString())
+                                                ),
+                                                React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: '10px' } },
+                                                    React.createElement('span', { className: 'expense-amount' }, '$' + exp.amount.toFixed(2)),
+                                                    React.createElement('button', { className: 'delete-btn', onClick: () => deleteExpense(exp.id) }, '×')
+                                                )
+                                            )
+                                        )
+                                        : React.createElement('div', { className: 'no-activities' }, 'No expenses tracked yet')
+                                )
+                        ),
+                        React.createElement('div', { className: 'card' },
+                            React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' } },
+                                React.createElement('h2', null, '🔗 Links & Resources'),
+                                React.createElement('button', { className: 'add-btn', onClick: () => { setEditingLink(null); setLinkModalOpen(true); } }, '+ Add Link')
+                            ),
+                            links.length > 0 ?
+                                links.map(link =>
+                                    React.createElement('div', { key: link.id, style: { marginBottom: '12px' } },
+                                        React.createElement('a', {
+                                            href: link.url,
+                                            target: '_blank',
+                                            rel: 'noopener noreferrer',
+                                            style: {
+                                                display: 'block',
+                                                background: 'linear-gradient(135deg, #818cf8 0%, #6366f1 100%)',
+                                                color: 'white',
+                                                padding: '12px 16px',
+                                                borderRadius: '8px',
+                                                textDecoration: 'none',
+                                                border: '1px solid #6366f1'
+                                            }
+                                        },
+                                            React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center' } },
+                                                React.createElement('div', { style: { flex: 1 } },
+                                                    React.createElement('div', { style: { fontWeight: '600', marginBottom: '4px' } }, link.title),
+                                                    link.description && React.createElement('div', { style: { fontSize: '0.85em', opacity: 0.9 } }, link.description),
+                                                    link.category && React.createElement('div', { style: { fontSize: '0.75em', marginTop: '4px', opacity: 0.7 } }, '📁 ' + link.category)
+                                                ),
+                                                React.createElement('div', { style: { display: 'flex', gap: '8px', marginLeft: '10px' } },
+                                                    React.createElement('button', { className: 'edit-btn', onClick: (e) => { e.preventDefault(); setEditingLink(link); setLinkModalOpen(true); }, style: { background: 'rgba(255,255,255,0.2)' } }, 'Edit'),
+                                                    React.createElement('button', { className: 'delete-btn', onClick: (e) => { e.preventDefault(); deleteLink(link.id); } }, 'Delete')
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                                : React.createElement('div', { className: 'no-activities' }, 'No links added yet')
+                        )
+                    )
+                ),
+                modalOpen && React.createElement(ActivityModal, { onClose: () => setModalOpen(false), onAdd: (act) => { addActivity(currentDay, act); setModalOpen(false); } }),
+                expenseModalOpen && React.createElement(ExpenseModal, { categories: budgetCategories, onClose: () => setExpenseModalOpen(false), onAdd: (exp) => { addExpense(exp); setExpenseModalOpen(false); } }),
+                budgetModalOpen && React.createElement(BudgetModal, { budget: editingBudget, onClose: () => setBudgetModalOpen(false), onSave: (cat) => { editingBudget ? updateBudgetCategory(editingBudget.id, cat) : addBudgetCategory(cat); setBudgetModalOpen(false); } }),
+                dayModalOpen && React.createElement(DayModal, { day: editingDay, onClose: () => setDayModalOpen(false), onSave: (d) => { editingDay ? updateDay(editingDay.index, d) : addDay(d); setDayModalOpen(false); } }),
+                linkModalOpen && React.createElement(LinkModal, { link: editingLink, onClose: () => setLinkModalOpen(false), onSave: (l) => { editingLink ? updateLink(editingLink.id, l) : addLink(l); setLinkModalOpen(false); } })
             );
         }
 
@@ -994,36 +824,34 @@
             const [notes, setNotes] = useState('');
             const [cost, setCost] = useState('');
 
-            return (
-                <div className="modal active" onClick={onClose}>
-                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                        <div className="modal-header">
-                            <h3>Add Activity</h3>
-                        </div>
-                        <form onSubmit={(e) => { e.preventDefault(); if(name) onAdd({ name, time: time || null, notes: notes || null, cost: cost ? parseFloat(cost) : null }); }}>
-                            <div className="form-group">
-                                <label>Activity Name *</label>
-                                <input type="text" value={name} onChange={(e) => setName(e.target.value)} required placeholder="e.g., Visit Sensoji Temple" />
-                            </div>
-                            <div className="form-group">
-                                <label>Time</label>
-                                <input type="time" value={time} onChange={(e) => setTime(e.target.value)} />
-                            </div>
-                            <div className="form-group">
-                                <label>Cost ($)</label>
-                                <input type="number" step="0.01" value={cost} onChange={(e) => setCost(e.target.value)} placeholder="0.00" />
-                            </div>
-                            <div className="form-group">
-                                <label>Notes</label>
-                                <textarea value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="Any special notes..."></textarea>
-                            </div>
-                            <div style={{display:'flex',gap:'10px',justifyContent:'flex-end'}}>
-                                <button type="button" className="btn btn-secondary" onClick={onClose}>Cancel</button>
-                                <button type="submit" className="btn btn-primary">Add Activity</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+            return React.createElement('div', { className: 'modal active', onClick: onClose },
+                React.createElement('div', { className: 'modal-content', onClick: (e) => e.stopPropagation() },
+                    React.createElement('div', { className: 'modal-header' },
+                        React.createElement('h3', null, 'Add Activity')
+                    ),
+                    React.createElement('form', { onSubmit: (e) => { e.preventDefault(); if (name) onAdd({ name, time: time || null, notes: notes || null, cost: cost ? parseFloat(cost) : null }); } },
+                        React.createElement('div', { className: 'form-group' },
+                            React.createElement('label', null, 'Activity Name *'),
+                            React.createElement('input', { type: 'text', value: name, onChange: (e) => setName(e.target.value), required: true, placeholder: 'e.g., Visit Sensoji Temple' })
+                        ),
+                        React.createElement('div', { className: 'form-group' },
+                            React.createElement('label', null, 'Time'),
+                            React.createElement('input', { type: 'time', value: time, onChange: (e) => setTime(e.target.value) })
+                        ),
+                        React.createElement('div', { className: 'form-group' },
+                            React.createElement('label', null, 'Cost ($)'),
+                            React.createElement('input', { type: 'number', step: '0.01', value: cost, onChange: (e) => setCost(e.target.value), placeholder: '0.00' })
+                        ),
+                        React.createElement('div', { className: 'form-group' },
+                            React.createElement('label', null, 'Notes'),
+                            React.createElement('textarea', { value: notes, onChange: (e) => setNotes(e.target.value), placeholder: 'Any special notes...' })
+                        ),
+                        React.createElement('div', { style: { display: 'flex', gap: '10px', justifyContent: 'flex-end' } },
+                            React.createElement('button', { type: 'button', className: 'btn btn-secondary', onClick: onClose }, 'Cancel'),
+                            React.createElement('button', { type: 'submit', className: 'btn btn-primary' }, 'Add Activity')
+                        )
+                    )
+                )
             );
         }
 
@@ -1033,40 +861,38 @@
             const [category, setCategory] = useState(categories[0]?.category || '');
             const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
 
-            return (
-                <div className="modal active" onClick={onClose}>
-                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                        <div className="modal-header">
-                            <h3>Add Expense</h3>
-                        </div>
-                        <form onSubmit={(e) => { e.preventDefault(); if(description && amount) onAdd({ description, amount: parseFloat(amount), category, date }); }}>
-                            <div className="form-group">
-                                <label>Description *</label>
-                                <input type="text" value={description} onChange={(e) => setDescription(e.target.value)} required placeholder="e.g., Lunch at Tsukiji Market" />
-                            </div>
-                            <div className="form-group">
-                                <label>Amount ($) *</label>
-                                <input type="number" step="0.01" value={amount} onChange={(e) => setAmount(e.target.value)} required placeholder="0.00" />
-                            </div>
-                            <div className="form-group">
-                                <label>Category *</label>
-                                <select value={category} onChange={(e) => setCategory(e.target.value)}>
-                                    {categories.map((cat, i) => (
-                                        <option key={i} value={cat.category}>{cat.category}</option>
-                                    ))}
-                                </select>
-                            </div>
-                            <div className="form-group">
-                                <label>Date *</label>
-                                <input type="date" value={date} onChange={(e) => setDate(e.target.value)} required />
-                            </div>
-                            <div style={{display:'flex',gap:'10px',justifyContent:'flex-end'}}>
-                                <button type="button" className="btn btn-secondary" onClick={onClose}>Cancel</button>
-                                <button type="submit" className="btn btn-primary">Add Expense</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+            return React.createElement('div', { className: 'modal active', onClick: onClose },
+                React.createElement('div', { className: 'modal-content', onClick: (e) => e.stopPropagation() },
+                    React.createElement('div', { className: 'modal-header' },
+                        React.createElement('h3', null, 'Add Expense')
+                    ),
+                    React.createElement('form', { onSubmit: (e) => { e.preventDefault(); if (description && amount) onAdd({ description, amount: parseFloat(amount), category, date }); } },
+                        React.createElement('div', { className: 'form-group' },
+                            React.createElement('label', null, 'Description *'),
+                            React.createElement('input', { type: 'text', value: description, onChange: (e) => setDescription(e.target.value), required: true, placeholder: 'e.g., Lunch at Tsukiji Market' })
+                        ),
+                        React.createElement('div', { className: 'form-group' },
+                            React.createElement('label', null, 'Amount ($) *'),
+                            React.createElement('input', { type: 'number', step: '0.01', value: amount, onChange: (e) => setAmount(e.target.value), required: true, placeholder: '0.00' })
+                        ),
+                        React.createElement('div', { className: 'form-group' },
+                            React.createElement('label', null, 'Category *'),
+                            React.createElement('select', { value: category, onChange: (e) => setCategory(e.target.value) },
+                                categories.map((cat, i) =>
+                                    React.createElement('option', { key: i, value: cat.category }, cat.category)
+                                )
+                            )
+                        ),
+                        React.createElement('div', { className: 'form-group' },
+                            React.createElement('label', null, 'Date *'),
+                            React.createElement('input', { type: 'date', value: date, onChange: (e) => setDate(e.target.value), required: true })
+                        ),
+                        React.createElement('div', { style: { display: 'flex', gap: '10px', justifyContent: 'flex-end' } },
+                            React.createElement('button', { type: 'button', className: 'btn btn-secondary', onClick: onClose }, 'Cancel'),
+                            React.createElement('button', { type: 'submit', className: 'btn btn-primary' }, 'Add Expense')
+                        )
+                    )
+                )
             );
         }
 
@@ -1074,28 +900,26 @@
             const [category, setCategory] = useState(budget?.category || '');
             const [projected, setProjected] = useState(budget?.projected || '');
 
-            return (
-                <div className="modal active" onClick={onClose}>
-                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                        <div className="modal-header">
-                            <h3>{budget ? 'Edit Budget Category' : 'Add Budget Category'}</h3>
-                        </div>
-                        <form onSubmit={(e) => { e.preventDefault(); if(category && projected) onSave({ category, projected: parseFloat(projected) }); }}>
-                            <div className="form-group">
-                                <label>Category Name *</label>
-                                <input type="text" value={category} onChange={(e) => setCategory(e.target.value)} required placeholder="e.g., Gifts & Souvenirs" disabled={!!budget} />
-                            </div>
-                            <div className="form-group">
-                                <label>Projected Amount ($) *</label>
-                                <input type="number" step="0.01" value={projected} onChange={(e) => setProjected(e.target.value)} required placeholder="0.00" />
-                            </div>
-                            <div style={{display:'flex',gap:'10px',justifyContent:'flex-end'}}>
-                                <button type="button" className="btn btn-secondary" onClick={onClose}>Cancel</button>
-                                <button type="submit" className="btn btn-primary">{budget ? 'Update' : 'Add'}</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+            return React.createElement('div', { className: 'modal active', onClick: onClose },
+                React.createElement('div', { className: 'modal-content', onClick: (e) => e.stopPropagation() },
+                    React.createElement('div', { className: 'modal-header' },
+                        React.createElement('h3', null, budget ? 'Edit Budget Category' : 'Add Budget Category')
+                    ),
+                    React.createElement('form', { onSubmit: (e) => { e.preventDefault(); if (category && projected) onSave({ category, projected: parseFloat(projected) }); } },
+                        React.createElement('div', { className: 'form-group' },
+                            React.createElement('label', null, 'Category Name *'),
+                            React.createElement('input', { type: 'text', value: category, onChange: (e) => setCategory(e.target.value), required: true, placeholder: 'e.g., Gifts & Souvenirs', disabled: !!budget })
+                        ),
+                        React.createElement('div', { className: 'form-group' },
+                            React.createElement('label', null, 'Projected Amount ($) *'),
+                            React.createElement('input', { type: 'number', step: '0.01', value: projected, onChange: (e) => setProjected(e.target.value), required: true, placeholder: '0.00' })
+                        ),
+                        React.createElement('div', { style: { display: 'flex', gap: '10px', justifyContent: 'flex-end' } },
+                            React.createElement('button', { type: 'button', className: 'btn btn-secondary', onClick: onClose }, 'Cancel'),
+                            React.createElement('button', { type: 'submit', className: 'btn btn-primary' }, budget ? 'Update' : 'Add')
+                        )
+                    )
+                )
             );
         }
 
@@ -1106,45 +930,38 @@
             const [highlights, setHighlights] = useState(day?.highlights || '');
             const [cost, setCost] = useState(day?.cost || '');
 
-            return (
-                <div className="modal active" onClick={onClose}>
-                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                        <div className="modal-header">
-                            <h3>{day ? 'Edit Day' : 'Add New Day'}</h3>
-                        </div>
-                        <form onSubmit={(e) => { 
-                            e.preventDefault(); 
-                            if(dayNum && date && location && highlights && cost) {
-                                onSave({ day: dayNum, date, location, highlights, cost: parseFloat(cost) }); 
-                            }
-                        }}>
-                            <div className="form-group">
-                                <label>Day Label *</label>
-                                <input type="text" value={dayNum} onChange={(e) => setDayNum(e.target.value)} required placeholder="e.g., Day 15" />
-                            </div>
-                            <div className="form-group">
-                                <label>Date *</label>
-                                <input type="date" value={date} onChange={(e) => setDate(e.target.value)} required />
-                            </div>
-                            <div className="form-group">
-                                <label>Location *</label>
-                                <input type="text" value={location} onChange={(e) => setLocation(e.target.value)} required placeholder="e.g., Tokyo (Ginza)" />
-                            </div>
-                            <div className="form-group">
-                                <label>Highlights *</label>
-                                <textarea value={highlights} onChange={(e) => setHighlights(e.target.value)} required placeholder="What will you do this day?"></textarea>
-                            </div>
-                            <div className="form-group">
-                                <label>Estimated Cost ($) *</label>
-                                <input type="number" step="0.01" value={cost} onChange={(e) => setCost(e.target.value)} required placeholder="0.00" />
-                            </div>
-                            <div style={{display:'flex',gap:'10px',justifyContent:'flex-end'}}>
-                                <button type="button" className="btn btn-secondary" onClick={onClose}>Cancel</button>
-                                <button type="submit" className="btn btn-primary">{day ? 'Update' : 'Add Day'}</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+            return React.createElement('div', { className: 'modal active', onClick: onClose },
+                React.createElement('div', { className: 'modal-content', onClick: (e) => e.stopPropagation() },
+                    React.createElement('div', { className: 'modal-header' },
+                        React.createElement('h3', null, day ? 'Edit Day' : 'Add New Day')
+                    ),
+                    React.createElement('form', { onSubmit: (e) => { e.preventDefault(); if (dayNum && date && location && highlights && cost) onSave({ day: dayNum, date, location, highlights, cost: parseFloat(cost) }); } },
+                        React.createElement('div', { className: 'form-group' },
+                            React.createElement('label', null, 'Day Label *'),
+                            React.createElement('input', { type: 'text', value: dayNum, onChange: (e) => setDayNum(e.target.value), required: true, placeholder: 'e.g., Day 15' })
+                        ),
+                        React.createElement('div', { className: 'form-group' },
+                            React.createElement('label', null, 'Date *'),
+                            React.createElement('input', { type: 'date', value: date, onChange: (e) => setDate(e.target.value), required: true })
+                        ),
+                        React.createElement('div', { className: 'form-group' },
+                            React.createElement('label', null, 'Location *'),
+                            React.createElement('input', { type: 'text', value: location, onChange: (e) => setLocation(e.target.value), required: true, placeholder: 'e.g., Tokyo (Ginza)' })
+                        ),
+                        React.createElement('div', { className: 'form-group' },
+                            React.createElement('label', null, 'Highlights *'),
+                            React.createElement('textarea', { value: highlights, onChange: (e) => setHighlights(e.target.value), required: true, placeholder: 'What will you do this day?' })
+                        ),
+                        React.createElement('div', { className: 'form-group' },
+                            React.createElement('label', null, 'Estimated Cost ($) *'),
+                            React.createElement('input', { type: 'number', step: '0.01', value: cost, onChange: (e) => setCost(e.target.value), required: true, placeholder: '0.00' })
+                        ),
+                        React.createElement('div', { style: { display: 'flex', gap: '10px', justifyContent: 'flex-end' } },
+                            React.createElement('button', { type: 'button', className: 'btn btn-secondary', onClick: onClose }, 'Cancel'),
+                            React.createElement('button', { type: 'submit', className: 'btn btn-primary' }, day ? 'Update' : 'Add Day')
+                        )
+                    )
+                )
             );
         }
 
@@ -1154,65 +971,38 @@
             const [description, setDescription] = useState(link?.description || '');
             const [category, setCategory] = useState(link?.category || '');
 
-            return (
-                <div className="modal active" onClick={onClose}>
-                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                        <div className="modal-header">
-                            <h3>{link ? 'Edit Link' : 'Add Link'}</h3>
-                        </div>
-                        <form onSubmit={(e) => { 
-                            e.preventDefault(); 
-                            if(title && url) onSave({ title, url, description, category }); 
-                        }}>
-                            <div className="form-group">
-                                <label>Link Title *</label>
-                                <input 
-                                    type="text" 
-                                    value={title} 
-                                    onChange={(e) => setTitle(e.target.value)} 
-                                    required 
-                                    placeholder="e.g., Hotel Reservation" 
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label>URL *</label>
-                                <input 
-                                    type="url" 
-                                    value={url} 
-                                    onChange={(e) => setUrl(e.target.value)} 
-                                    required 
-                                    placeholder="https://..." 
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label>Description</label>
-                                <input 
-                                    type="text" 
-                                    value={description} 
-                                    onChange={(e) => setDescription(e.target.value)} 
-                                    placeholder="Brief note about this link" 
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label>Category</label>
-                                <input 
-                                    type="text" 
-                                    value={category} 
-                                    onChange={(e) => setCategory(e.target.value)} 
-                                    placeholder="e.g., Hotels, Transport, Food" 
-                                />
-                            </div>
-                            <div style={{display:'flex',gap:'10px',justifyContent:'flex-end'}}>
-                                <button type="button" className="btn btn-secondary" onClick={onClose}>Cancel</button>
-                                <button type="submit" className="btn btn-primary">{link ? 'Update' : 'Add Link'}</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+            return React.createElement('div', { className: 'modal active', onClick: onClose },
+                React.createElement('div', { className: 'modal-content', onClick: (e) => e.stopPropagation() },
+                    React.createElement('div', { className: 'modal-header' },
+                        React.createElement('h3', null, link ? 'Edit Link' : 'Add Link')
+                    ),
+                    React.createElement('form', { onSubmit: (e) => { e.preventDefault(); if (title && url) onSave({ title, url, description, category }); } },
+                        React.createElement('div', { className: 'form-group' },
+                            React.createElement('label', null, 'Link Title *'),
+                            React.createElement('input', { type: 'text', value: title, onChange: (e) => setTitle(e.target.value), required: true, placeholder: 'e.g., Hotel Reservation' })
+                        ),
+                        React.createElement('div', { className: 'form-group' },
+                            React.createElement('label', null, 'URL *'),
+                            React.createElement('input', { type: 'url', value: url, onChange: (e) => setUrl(e.target.value), required: true, placeholder: 'https://...' })
+                        ),
+                        React.createElement('div', { className: 'form-group' },
+                            React.createElement('label', null, 'Description'),
+                            React.createElement('input', { type: 'text', value: description, onChange: (e) => setDescription(e.target.value), placeholder: 'Brief note about this link' })
+                        ),
+                        React.createElement('div', { className: 'form-group' },
+                            React.createElement('label', null, 'Category'),
+                            React.createElement('input', { type: 'text', value: category, onChange: (e) => setCategory(e.target.value), placeholder: 'e.g., Hotels, Transport, Food' })
+                        ),
+                        React.createElement('div', { style: { display: 'flex', gap: '10px', justifyContent: 'flex-end' } },
+                            React.createElement('button', { type: 'button', className: 'btn btn-secondary', onClick: onClose }, 'Cancel'),
+                            React.createElement('button', { type: 'submit', className: 'btn btn-primary' }, link ? 'Update' : 'Add Link')
+                        )
+                    )
+                )
             );
         }
 
-        ReactDOM.render(<App />, document.getElementById('root'));
+        ReactDOM.render(React.createElement(App), document.getElementById('root'));
     </script>
 </body>
 </html>
